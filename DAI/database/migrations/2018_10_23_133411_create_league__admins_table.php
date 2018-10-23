@@ -15,9 +15,13 @@ class CreateLeagueAdminsTable extends Migration
     {
         Schema::create('league__admins', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('user_role');
-            $table->integer('league_id');
+            $table->string('user_role',20);
+            $table->integer('user_id')->unsigned();
+            $table->integer('league_id')->unsigned();
+            $table->index('league_id') ;
+            $table->index('user_id') ;
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('league_id')->references('id')->on('leagues')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -15,11 +15,15 @@ class CreateGamesTable extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('player_one') ;
-            $table->integer('player_two') ;
-            $table->integer('game_no_one');
-            $table->integer('game_no_two');
-            $table->integer('player_turn') ;
+            $table->integer('player_one')->unsigned();
+            $table->integer('player_two')->unsigned() ;
+            $table->index('player_one') ;
+            $table->index('player_two') ;
+            $table->foreign('player_one')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('player_two')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('game_no_one')->unsigned();
+            $table->integer('game_no_two')->unsigned();
+            $table->integer('player_turn')->unsigned() ;
             $table->timestamps();
         });
     }

@@ -15,9 +15,15 @@ class CreateResultsTable extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('winner_id') ;
-            $table->integer('loser_id') ;
-            $table->integer('game_id') ;
+            $table->integer('winner_id')->unsigned() ;
+            $table->integer('loser_id')->unsigned() ;
+            $table->integer('game_id')->unsigned() ;
+            $table->index('game_id') ;
+            $table->index('winner_id') ;
+            $table->index('loser_id') ;
+            $table->foreign('winner_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('loser_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
             $table->timestamps();
         });
     }

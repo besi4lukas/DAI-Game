@@ -20,6 +20,9 @@ class CreateUserProfilesTable extends Migration
             $table->string('lastName',50);
             $table->text('user_image');
             $table->integer('user_coins');
+            $table->integer('user_id')->unsigned();
+            $table->index('user_id') ;
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

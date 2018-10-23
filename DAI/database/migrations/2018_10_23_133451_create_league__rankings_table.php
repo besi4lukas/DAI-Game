@@ -15,9 +15,13 @@ class CreateLeagueRankingsTable extends Migration
     {
         Schema::create('league__rankings', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
             $table->integer('score');
-            $table->integer('league_id');
+            $table->integer('league_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->index('league_id') ;
+            $table->index('user_id') ;
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('league_id')->references('id')->on('leagues')->onDelete('cascade');
             $table->timestamps();
         });
     }

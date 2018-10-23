@@ -16,7 +16,9 @@ class CreateGuessesTable extends Migration
         Schema::create('guesses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('log',200) ;
-            $table->integer('game_id') ;
+            $table->integer('game_id')->unsigned();
+            $table->index('game_id') ;
+            $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
             $table->timestamps();
         });
     }
