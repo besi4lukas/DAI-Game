@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class NotificationController extends Controller
+class SettingController extends Controller
 {
     public function index(){
-
-        return view('dai_views.notifications') ;
+        return view('dai_views.settings') ;
     }
 }

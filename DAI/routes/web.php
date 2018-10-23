@@ -19,3 +19,17 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/league','LeagueController@index');
+
+Route::get('/game','Game@index') ;
+
+Route::get('/one_on_one','Game@one_on_one');
+
+Route::get('/user_profile','UserController@index');
+
+Route::get('/users','UserController@users') ;
+
+Route::get('/notifications','NotificationController@index') ;
+
+Route::get('/settings','SettingController@index') ;
