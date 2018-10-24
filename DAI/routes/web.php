@@ -33,3 +33,5 @@ Route::get('/users','UserController@users') ;
 Route::get('/notifications','NotificationController@index') ;
 
 Route::get('/settings','SettingController@index') ;
+
+Route::get('/user_league','LeagueController@user_league');

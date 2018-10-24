@@ -65,7 +65,7 @@
 @section('navbar')
 
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
+        <nav class="navbar navbar-expand-lg navbar-transparent " id="navigation-example">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
                     <a class="navbar-brand" href="javascript:void(0)">Leagues</a>
@@ -131,6 +131,104 @@
 @section('content')
 
 
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header card-header-info">
+                <h4 class="card-title">Your Leagues</h4>
+                <p class="card-category"> <a href="#pablo" class="btn btn-info btn-round">Create new League</a></p>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-hover">
+                    <thead class="text-warning">
+                    <th>League Name</th>
+                    <th>Players</th>
+                    <th>Status</th>
+
+
+                    </thead>
+                    <tbody>
+                    <tr>
+
+                        <td>Dakota Rice</td>
+                        <td>738</td>
+                        <td>Public</td>
+                        <td> <a href="{{url('/user_league')}}" class="btn btn-info btn-round btn-sm">View</a></td>
+                    </tr>
+                    <tr>
+
+                        <td>Minerva Hooper</td>
+                        <td>89</td>
+                        <td>Public</td>
+                        <td><a href="#pablo" class="btn btn-info btn-round btn-sm">View</a></td>
+                    </tr>
+                    <tr>
+
+                        <td>Sage Rodriguez</td>
+                        <td>142</td>
+                        <td>Public</td>
+                        <td><a href="#pablo" class="btn btn-info btn-round btn-sm">View</a></td>
+                    </tr>
+                    <tr>
+
+                        <td>Philip Chaney</td>
+                        <td>35</td>
+                        <td>Public</td>
+                        <td><a href="#pablo" class="btn btn-info btn-round btn-sm">view</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">All Leagues</h4>
+                <p class="card-category"></p>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-hover">
+                    <thead class="text-warning">
+                    <th>League Name</th>
+                    <th>Players</th>
+                    <th>Status</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+
+                        <td>Dakota Rice</td>
+                        <td>$36,738</td>
+                        <td>Public</td>
+                        <td><a href="#pablo" class="btn btn-primary btn-round btn-sm">Join</a></td>
+                    </tr>
+                    <tr>
+
+                        <td>Minerva Hooper</td>
+                        <td>$23,789</td>
+                        <td>Public</td>
+                        <td><a href="#pablo" class="btn btn-primary btn-round btn-sm">Join</a></td>
+                    </tr>
+                    <tr>
+
+                        <td>Sage Rodriguez</td>
+                        <td>$56,142</td>
+                        <td>Private</td>
+                        <td><a href="#pablo" class="btn btn-primary btn-round btn-sm">Join</a></td>
+                    </tr>
+                    <tr>
+
+                        <td>Philip Chaney</td>
+                        <td>$38,735</td>
+                        <td>Private</td>
+                        <td><a href="#pablo" class="btn btn-primary btn-round btn-sm">Join</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
 
 
 

@@ -11,4 +11,10 @@ class LeagueController extends Controller
 
         return view('dai_views.league') ;
     }
+
+
+    public function user_league(){
+        return view('dai_views.user_league');
+
+    }
 }
