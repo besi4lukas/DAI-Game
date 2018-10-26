@@ -17,15 +17,22 @@
     <link href="{{asset('temp/assets/css/material-dashboard.css?v=2.1.0')}}" rel="stylesheet" />
 
 
+
 </head>
 
 <body class="dark-edition">
+<?php
+
+        $user = \Illuminate\Support\Facades\Auth::user() ;
+        $user_profile = \Illuminate\Support\Facades\DB::select('select * from user__profiles where user_id = ?',[$user->id]) ;
+
+?>
     <div class="wrapper ">
-        <div class="sidebar" data-color="purple" data-background-color="black" data-image="{{asset('temp/assets/img/sidebar-2.jpg')}}">
+        <div class="sidebar" data-color="purple" data-background-color="black" data-image="{{asset('temp/assets/img/fire4.gif')}}">
 
             <div class="logo">
-                <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-                    USERNAME
+                <a href="{{url('/user_profile')}}" class="simple-text logo-normal">
+                    {{$user_profile[0]->username}}
                 </a>
             </div>
 
@@ -36,12 +43,156 @@
         </div>
 
         <div class="main-panel">
-            @yield('navbar')
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-transparent " id="navigation-example">
+                <div class="container-fluid">
 
+                    @yield('navbar')
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end">
+                        <form class="navbar-form">
+                            <div class="input-group no-border">
+                                <input type="text" value="" class="form-control" placeholder="Search...">
+                                <button type="submit" class="btn btn-default btn-round btn-just-icon">
+                                    <i class="material-icons">search</i>
+                                    <div class="ripple-container"></div>
+                                </button>
+                            </div>
+                        </form>
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{url('/home')}}">
+                                    <i class="material-icons">dashboard</i>
+                                    <p class="d-lg-none d-md-block">
+                                        Stats
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+
+                                <a class="nav-link"  href="javscript:void(0)"
+                                   id="navbarDropdownMenuLink"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="markNotificationAsRead()">
+                                    <i class="material-icons" data-toggle="dropdown">notifications</i>
+                                    <span class="notification">{{count(auth()->user()->unreadNotifications)}}</span>
+                                    <p class="d-lg-none d-md-block">
+                                        Some Actions
+                                    </p>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                    @forelse(auth()->user()->unreadNotifications as $notification)
+                                        @include('layouts.notification.'.snake_case(class_basename($notification->type)))
+                                        @empty
+                                        <p class="dropdown-item">
+                                            you have no new game requests
+                                        </p>
+                                    @endforelse
+
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="javascript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">person</i>
+                                    <p class="d-lg-none d-md-block">
+                                        Account
+                                    </p>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                    <a href="{{ route('logout') }}" class="dropdown-item"
+                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</a>
+                                    <form id="logout-form" action="{{route('logout')}}" method="post" style="display: none;">
+                                        {{csrf_field()}}
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <br>
+            <!-- End Navbar -->
+
+
+
+
+            <!-- The Modal player one-->
+            <div class="modal fade" id="myModalOne">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Enter your game number</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body dark-edition">
+                            <form method="POST" action="{{route('gameLaunch')}}">
+                                <input type="hidden" id="game_id" class="form-control" name="game_id" value="">
+                                <input type="text" class="form-control" name="number" >
+                                <button type="submit" class="btn btn-primary pull-right">Confirm</button>
+                                {{ csrf_field() }}
+                            </form>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <!-- The Modal player two-->
+            <div class="modal fade" id="myModalTwo">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Enter your game number</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body dark-edition">
+                            <form method="POST" action="{{route('game')}}">
+                                <input type="hidden" id="player_one" name="player_one" value="">
+                                <input type="text" class="form-control" name="number" >
+                                <button type="submit" class="btn btn-primary pull-right">Confirm</button>
+                                {{ csrf_field() }}
+                            </form>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="container-fluid">
 
             @yield('content')
 
-        </div>
+            </div>
 
         </div>
 
@@ -52,9 +203,10 @@
     <!--   Core JS Files   -->
     <script src="{{asset('temp/assets/js/core/jquery.min.js')}}"></script>
     <script src="{{asset('temp/assets/js/core/popper.min.js')}}"></script>
-    <script src="{{asset('/assets/js/core/bootstrap-material-design.min.js')}}"></script>
+    <script src="{{asset('temp/assets/js/core/bootstrap-material-design.min.js')}}"></script>
     <script src="https://unpkg.com/default-passive-events"></script>
     <script src="{{asset('temp/assets/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script>
+    <script src="{{asset('js/main.js')}}"> </script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -67,6 +219,53 @@
 
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{asset('temp/assets/js/material-dashboard.js?v=2.1.0')}}"></script>
+
+
+<script>
+
+    function add(){
+        $('#myModalTwo').on('show.bs.modal', function (event) { // id of the modal with event
+
+            var button = $(event.relatedTarget); // Button that triggered the modal
+
+            var id = button.data('id');
+
+            // Update the modal's content.
+
+            var modal = $(this);
+            console.log(id);
+            console.log(modal);
+
+            modal.find('.modal-body input#player_one').val(id);
+
+
+
+        })
+    }
+
+    function add_game_id(){
+        $('#myModalOne').on('show.bs.modal', function (event) { // id of the modal with event
+
+            var button = $(event.relatedTarget); // Button that triggered the modal
+
+            var id = button.data('id');
+
+            // Update the modal's content.
+
+            var modal = $(this);
+            console.log(id);
+            console.log(modal);
+
+            modal.find('.modal-body input#game_id').val(id);
+
+
+
+        })
+    }
+
+</script>
+
+
 
 
 

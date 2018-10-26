@@ -1,96 +1,91 @@
 <!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<html>
 
-        <title>Laravel</title>
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link rel="icon" href="{{asset('temp/assets/img/game.png')}}" type="image/gif" sizes="16x16" />
+    <link rel="stylesheet" href="{{asset('temp/assets/css/style.css')}}" type="text/css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Dead and the injured</title>
+</head>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
+<body id="body" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{asset('temp/assets/img/image.jpg')}}');">
+<!--NAVBAR CONFIGURATION-->
+<nav class="navbar navbar-expand-sm navbar-dark fixed-top">
+    <div class="container">
+        <a href="#" class="navbar-brand">
+            <span style="color: white" class="navbar-text">THE DEAD AND THE INJURED</span>
+        </a>
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#nav-coll">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
 
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
+        <div class="navbar-collapse collapse" id="nav-coll">
             @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
+            <ul class="navbar-nav ml-auto">
+                @auth
+                <li class="nav-item">
+                <a href="{{ url('/home') }}" class="nav-link ">
+                                                Go to Dashboard</a>
+                </li>
+                @else
+                {{--<li class="nav-item">--}}
+                    {{--<a href="#" class="nav-link">Explore</a>--}}
+                {{--</li>--}}
+                {{--<li class="nav-item">--}}
+                    {{--<a href=".#" class="nav-link">How We Play</a>--}}
+                {{--</li>--}}
+
+
+                    <li class="nav-item">
+                        <a href="{{ route('login') }}" class="nav-link">LOGIN</a>
+                    </li>
+                <li class="nav-item">
+                    <a href="{{ route('register') }}" class="nav-link">
+                        <i class="material-icons">  </i> REGISTER</a>
+                </li>
+
+                {{--<li class="nav-item">--}}
+                    {{--<a href="#" class="nav-link">FAQs</a>--}}
+                {{--</li>--}}
+                @endauth
+            </ul>
             @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
         </div>
-    </body>
+    </div>
+</nav>
+
+
+
+
+<div class="container align-middle">
+    <div class="row">
+        <div class="container" id="content">
+            <div class="col-lg12">
+                <h1 class="display-3">THE DEAD AND THE INJURED</h1>
+                <h3 class="display-5">Will you survive?</h3>
+                <hr id="#hr">
+            </div>
+            {{--<div class="">--}}
+                {{--<a class="btn btn-outline-success" href="#" role="button">Battle</a>--}}
+            {{--</div>--}}
+        </div>
+
+    </div>
+</div>
+
+
+
+<!--JQUERY AND JAVASCRIPT CDNS-->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+</body>
+
 </html>

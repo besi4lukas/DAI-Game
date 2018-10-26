@@ -9,8 +9,24 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{asset('temp/assets/css/game.css')}}">
     <script type="text/javascript" src="{{asset('temp/assets/js/dead.js')}}"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
+
+<?php
+
+        $user_id = \Illuminate\Support\Facades\Auth::user()->id ;
+        $user_profile = \Illuminate\Support\Facades\DB::select('select * from user__profiles where user_id = ?',[$user_id]) ;
+        $player_one = \Illuminate\Support\Facades\DB::select('select player_one from games where id = ?',[$game_id]) ;
+
+        if ($user_id == $player_one[0]->player_one){
+
+            $game_no = \Illuminate\Support\Facades\DB::select('select game_no_one as number from games where player_one = ?',[$user_id]) ;
+        }else{
+            $game_no = \Illuminate\Support\Facades\DB::select('select game_no_two as number from games where player_two = ?',[$user_id]) ;
+        }
+
+?>
 <div class="row">
     {{--background-image: url('{{asset('temp/assets/img/bird.gif')}}');--}}
 
@@ -19,56 +35,58 @@
         <h1 style="font-family: courier; color: white;"><center>Guessed Numbers</center></h1>
 
 
-        <table>
-            <tr>
-                <th><center>player</center></th>
-                <th><center>number guessed</center></th>
+        {{--<table>--}}
+            {{--<tr>--}}
+                {{--<th><center>player</center></th>--}}
+                {{--<th><center>number guessed</center></th>--}}
 
-            </tr>
-            <tr>
-                <td><center>1</center></td>
-                <td><center>123</center></td>
+            {{--</tr>--}}
+            {{--<tr>--}}
+                {{--<td><center>1</center></td>--}}
+                {{--<td><center>123</center></td>--}}
 
-            </tr>
-            <tr>
-                <td><center>2</center></td>
-                <td><center>657</center></td>
-            </tr>
-            <tr>
-                <td><center>1</center></td>
-                <td><center>983</center></td>
-            </tr>
-            <tr>
-                <td><center>2</center></td>
-                <td><center>387</center></td>
-            </tr>
-            <tr>
-                <td><center>1</center></td>
-                <td><center>257</center></td>
-            </tr>
-            <tr>
-                <td><center>2</center></td>
-                <td><center>121</center></td>
-            </tr>
-        </table>
+            {{--</tr>--}}
+            {{--<tr>--}}
+                {{--<td><center>2</center></td>--}}
+                {{--<td><center>657</center></td>--}}
+            {{--</tr>--}}
+            {{--<tr>--}}
+                {{--<td><center>1</center></td>--}}
+                {{--<td><center>983</center></td>--}}
+            {{--</tr>--}}
+            {{--<tr>--}}
+                {{--<td><center>2</center></td>--}}
+                {{--<td><center>387</center></td>--}}
+            {{--</tr>--}}
+            {{--<tr>--}}
+                {{--<td><center>1</center></td>--}}
+                {{--<td><center>257</center></td>--}}
+            {{--</tr>--}}
+            {{--<tr>--}}
+                {{--<td><center>2</center></td>--}}
+                {{--<td><center>121</center></td>--}}
+            {{--</tr>--}}
+        {{--</table>--}}
     </div>
 
 
 
 
     <div class="col-sm-4" style="background-color:white; padding-top: 3%" id="col2" >
-        <h1 style="font-family: courier; padding-bottom: 7%"><center>361</center></h1>
-        <p><img src="{{asset('temp/assets/img/me.png')}}" id="coin" style=" padding-bottom: 10%"></p>
-        <p><h1 style="font-family: courier"><center>Gbetondji</center></h1></p>
+        <h1 style="font-family: courier; padding-bottom: 7%"><center>{{$game_no[0]->number}}</center></h1>
+        {{--<p><img src="{{asset('temp/assets/img/me.png')}}" id="coin" style=" padding-bottom: 10%"></p>--}}
+        <p><h1 style="font-family: courier"><center>{{$user_profile[0]->username}}</center></h1></p>
 
 
         <p style="margin-top: 13%">
-            <input type="text" style="width: 32%;" onkeypress="return isNumberKey(event)" autofocus maxlength="1"/>
-            <input type="text" style="width: 34%;" onkeypress="return isNumberKey(event)"autofocus maxlength="1"/>
-            <input type="text" style="width: 32%;" onkeypress="return isNumberKey(event)"autofocus maxlength="1" />
+            <input id="idnumber" type="hidden" value="{{$user_id}}" >
+            <input id="game_id" type="hidden" value="{{$game_id}}" >
+            <input id="number1" type="text" style="width: 32%;" onkeypress="return isNumberKey(event)" autofocus maxlength="1"/>
+            <input id="number2" type="text" style="width: 34%;" onkeypress="return isNumberKey(event)"autofocus maxlength="1"/>
+            <input id="number3" type="text" style="width: 32%;" onkeypress="return isNumberKey(event)"autofocus maxlength="1" />
         </p>
 
-        <button id="coin" class="button">send</button>
+        <button ONCLICK="posting()" id="coin" class="button">send</button>
 
     </div>
 
@@ -78,38 +96,38 @@
 
         <h1 style="font-family: courier; color: white;"><center>Report</center></h1>
 
-        <table>
-            <tr>
-                <th><center>dead</center></th>
-                <th><center>injured</center></th>
+        {{--<table>--}}
+            {{--<tr>--}}
+                {{--<th><center>dead</center></th>--}}
+                {{--<th><center>injured</center></th>--}}
 
-            </tr>
-            <tr>
-                <td><center>1</center></td>
-                <td><center>0</center></td>
+            {{--</tr>--}}
+            {{--<tr>--}}
+                {{--<td><center>1</center></td>--}}
+                {{--<td><center>0</center></td>--}}
 
-            </tr>
-            <tr>
-                <td><center>1</center></td>
-                <td><center>0</center></td>
-            </tr>
-            <tr>
-                <td><center>2</center></td>
-                <td><center>1</center></td>
-            </tr>
-            <tr>
-                <td><center>0</center></td>
-                <td><center>3</center></td>
-            </tr>
-            <tr>
-                <td><center>1</center></td>
-                <td><center>2</center></td>
-            </tr>
-            <tr>
-                <td><center>0</center></td>
-                <td><center>0</center></td>
-            </tr>
-        </table>
+            {{--</tr>--}}
+            {{--<tr>--}}
+                {{--<td><center>1</center></td>--}}
+                {{--<td><center>0</center></td>--}}
+            {{--</tr>--}}
+            {{--<tr>--}}
+                {{--<td><center>2</center></td>--}}
+                {{--<td><center>1</center></td>--}}
+            {{--</tr>--}}
+            {{--<tr>--}}
+                {{--<td><center>0</center></td>--}}
+                {{--<td><center>3</center></td>--}}
+            {{--</tr>--}}
+            {{--<tr>--}}
+                {{--<td><center>1</center></td>--}}
+                {{--<td><center>2</center></td>--}}
+            {{--</tr>--}}
+            {{--<tr>--}}
+                {{--<td><center>0</center></td>--}}
+                {{--<td><center>0</center></td>--}}
+            {{--</tr>--}}
+        {{--</table>--}}
 
     </div>
 

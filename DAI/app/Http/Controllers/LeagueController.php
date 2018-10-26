@@ -17,4 +17,11 @@ class LeagueController extends Controller
         return view('dai_views.user_league');
 
     }
+
+    public function game($_game_id){
+
+        $game_id = $_game_id ;
+
+        return view('dai.views.game',compact('game_id')) ;
+    }
 }

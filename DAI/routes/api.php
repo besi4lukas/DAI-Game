@@ -16,3 +16,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/guess','API\ApiController@guess_endpoint');
+
+//Route::get('/guess',function () {
+//    return "Api for the guesses";
+//} );
