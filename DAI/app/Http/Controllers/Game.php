@@ -11,81 +11,116 @@ use App\User_Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Events\newRequest ;
 
 class Game extends Controller
 {
 
-//    public function index($id){
-//
-//        $game_id = $id ;
-//
-//        return view('dai.views.game',compact('game_id')) ;
-//    }
+    public function index($id){
+
+        $game_id = $id ;
+
+        return view('dai_views.game', compact('game_id')) ;
+    }
 
     public function index_player_two(Request $request){
 
-        $game = new \App\Game();
-        $status = "pending" ;
+        if (Auth::check()) {
+            $game = new \App\Game();
+            $status = "pending";
 
-        $user_id = Auth::user()->id ;
+            $user_id = Auth::user()->id;
+            $id = $request->player_one;
+            $game->player_two = $user_id;
+            $game->player_one = $id;
+            $game->game_no_two = $request->number;
+            $game->player_turn = 1;
+            $game->status = $status;
+            $game->save();
 
-        $id = $request->player_one ;
-//        dd($request) ;
-        $game->player_two = $user_id;
-        $game->player_one = $id ;
-        $game->game_no_two = $request->number ;
-        $game->player_turn = 1 ;
-        $game->status = $status ;
+            $pending_game = DB::select('select * from games where player_one = ? and player_two = ? and status = ?', [$request->player_one, $user_id, $status]);
+            $game_id = $pending_game[0]->id;
+            $player_one = User::where('id', intval($id))->first();
+            $player_one->notify(new AcceptRequest($user_id, $game_id));
 
-        $game->save();
+            return redirect()->route('newGame', ['id' => $game_id]);
 
-//        $pending_game = \App\Game::where('player_one',$request->player_one)
-//            ->where('player_two',Auth::user()->id)->where('status',$status)->first() ;
-
-        $pending_game = DB::select('select * from games where player_one = ? and player_two = ? and status = ?',[$request->player_one,$user_id,$status]) ;
-
-        $game_id = $pending_game[0]->id ;
-
-        $player_one = User::where('id',intval($id))->first();
-
-        $player_one->notify(new AcceptRequest($user_id,$game_id)) ;
-
-        return redirect()->action('LeagueController@game',[$game_id]) ;
+        }else{
+            return redirect('/login') ;
+        }
     }
 
     public function index_player_one(Request $request){
 
-        $status = "active" ;
-        $status_pending = "pending" ;
-        $pending_game = \App\Game::where('id',$request->game_id)->where('status',$status_pending)->first() ;
+        if (Auth::check()) {
 
-        $pending_game->game_no_one = $request->number ;
-        $pending_game->status = $status ;
+            $status = "active";
+            $status_pending = "pending";
+            $pending_game = \App\Game::where('id', $request->game_id)->where('status', $status_pending)->first();
 
-        $pending_game->save() ;
+            $pending_game->game_no_one = $request->number;
+            $pending_game->status = $status;
 
-        $game_id = $request->game_id ;
+            $pending_game->save();
 
-        return redirect()->action('LeagueController@game',[$game_id]) ; ;
+            $game_id = $request->game_id;
+
+            return redirect()->route('newGame', ['id' => $game_id]);
+        }else{
+            return redirect('/login') ;
+        }
     }
 
     public function one_on_one(){
 
+        if (Auth::check()) {
 
-        return view('dai_views.one_on_one') ;
+            $user = Auth::user();
+            $active_games = array();
+            $Actives = DB::select('select * from games where (player_one = ? or player_two = ?) and status = ?', [$user->id, $user->id, "active"]);
+            $count = 0;
+            $game_id = array();
+
+            foreach ($Actives as $active) {
+                if ($active->player_one == $user->id) {
+                    $player_two = $active->player_two;
+                    $user_profile = User_Profile::where('user_id', $player_two)->first();
+                    $active_games[$count] = $user_profile;
+                    $game_id[$count] = $active->id;
+                } else {
+                    $player_one = $active->player_one;
+                    $user_profile = User_Profile::where('user_id', $player_one)->first();
+                    $active_games[$count] = $user_profile;
+                    $game_id[$count] = $active->id;
+                }
+                $count += 1;
+            }
+
+            return view('dai_views.one_on_one', compact('active_games', 'game_id'));
+        }else{
+            return redirect('/login') ;
+        }
     }
 
 
 
     public function battleRequest($id){
 
-        $user = User::where('id', intval($id))->first() ;
+        if (Auth::check()) {
 
-        $sender_id = Auth::user()->id ;
+            $user = User::where('id', intval($id))->first();
 
-        $user->notify(new Requests($sender_id));
+            $sender_id = Auth::user()->id;
 
-        return $this->one_on_one() ;
+            $user->notify(new Requests($sender_id));
+
+            event(new newRequest(intval($id)));
+
+            return $this->one_on_one();
+
+        }else{
+            return redirect('/login') ;
+        }
 
     }
 

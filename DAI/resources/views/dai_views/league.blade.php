@@ -29,16 +29,16 @@
                 </a>
             </li>
 
-            <li class="nav-item ">
-                <a class="nav-link" href="{{url('/notifications')}}">
-                    <i class="material-icons">notifications</i>
-                    <p>Notifications</p>
-                </a>
-            </li>
+            {{--<li class="nav-item ">--}}
+                {{--<a class="nav-link" href="{{url('/notifications')}}">--}}
+                    {{--<i class="material-icons">notifications</i>--}}
+                    {{--<p>Notifications</p>--}}
+                {{--</a>--}}
+            {{--</li>--}}
 
             <li class="nav-item ">
                 <a class="nav-link" href="{{url('/settings')}}">
-                    <i class="material-icons">build</i>
+                    <i class="material-icons">settings</i>
                     <p>Settings</p>
                 </a>
             </li>
@@ -51,12 +51,12 @@
                 {{--</a>--}}
             {{--</li>--}}
 
-            <li class="nav-item ">
-                <a class="nav-link" href="{{url('/users')}}">
-                    <i class="material-icons">person</i>
-                    <p>Users</p>
-                </a>
-            </li>
+            {{--<li class="nav-item ">--}}
+                {{--<a class="nav-link" href="{{url('/users')}}">--}}
+                    {{--<i class="material-icons">person</i>--}}
+                    {{--<p>Users</p>--}}
+                {{--</a>--}}
+            {{--</li>--}}
 
         </ul>
     </div>
@@ -78,7 +78,10 @@
         <div class="card">
             <div class="card-header card-header-info">
                 <h4 class="card-title">Your Leagues</h4>
-                <p class="card-category"> <a href="#pablo" class="btn btn-info btn-round">Create new League</a></p>
+                <p class="card-category"> <a href="#pablo" class="btn btn-info btn-round"
+                                             data-toggle="modal"
+                                             data-target="#createLeague"
+                    >Create new League</a></p>
             </div>
             <div class="card-body table-responsive">
                 <table class="table table-hover">
@@ -87,37 +90,15 @@
                     <th>Players</th>
                     <th>Status</th>
 
-
                     </thead>
                     <tbody>
                     <tr>
-
                         <td>Dakota Rice</td>
                         <td>738</td>
                         <td>Public</td>
                         <td> <a href="{{url('/user_league')}}" class="btn btn-info btn-round btn-sm">View</a></td>
                     </tr>
-                    <tr>
 
-                        <td>Minerva Hooper</td>
-                        <td>89</td>
-                        <td>Public</td>
-                        <td><a href="#pablo" class="btn btn-info btn-round btn-sm">View</a></td>
-                    </tr>
-                    <tr>
-
-                        <td>Sage Rodriguez</td>
-                        <td>142</td>
-                        <td>Public</td>
-                        <td><a href="#pablo" class="btn btn-info btn-round btn-sm">View</a></td>
-                    </tr>
-                    <tr>
-
-                        <td>Philip Chaney</td>
-                        <td>35</td>
-                        <td>Public</td>
-                        <td><a href="#pablo" class="btn btn-info btn-round btn-sm">view</a></td>
-                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -138,39 +119,54 @@
                     <th>Status</th>
                     </thead>
                     <tbody>
-                    <tr>
 
+                    <tr>
                         <td>Dakota Rice</td>
                         <td>$36,738</td>
                         <td>Public</td>
                         <td><a href="#pablo" class="btn btn-primary btn-round btn-sm">Join</a></td>
                     </tr>
-                    <tr>
 
-                        <td>Minerva Hooper</td>
-                        <td>$23,789</td>
-                        <td>Public</td>
-                        <td><a href="#pablo" class="btn btn-primary btn-round btn-sm">Join</a></td>
-                    </tr>
-                    <tr>
-
-                        <td>Sage Rodriguez</td>
-                        <td>$56,142</td>
-                        <td>Private</td>
-                        <td><a href="#pablo" class="btn btn-primary btn-round btn-sm">Join</a></td>
-                    </tr>
-                    <tr>
-
-                        <td>Philip Chaney</td>
-                        <td>$38,735</td>
-                        <td>Private</td>
-                        <td><a href="#pablo" class="btn btn-primary btn-round btn-sm">Join</a></td>
-                    </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
+    </div>
+
+
+
+    <div class="modal fade" id="createLeague">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Create League</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body dark-edition">
+                    <form method="POST" action="#">
+                        {{--<input type="hidden" id="game_id" class="form-control" name="game_id" value="">--}}
+                        <input type="text" class="form-control" name="league" placeholder="Enter Name of League" required autocomplete="off">
+                        <select class="form-control" id="status" name="status">
+                            <option value="public" style="color:#000;">  Public</option>
+                            <option value="private" style="color:#000;"> Private</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary pull-right">Create</button>
+                        {{ csrf_field() }}
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                {{--<div class="modal-footer">--}}
+                    {{--<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>--}}
+                {{--</div>--}}
+
+            </div>
+        </div>
     </div>
 
 

@@ -4,6 +4,7 @@
     </IfModule>
 
     RewriteEngine On
+	RewriteBase /projectx/dai/public
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .

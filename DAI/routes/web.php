@@ -22,13 +22,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/league','LeagueController@index');
 
+Route::post('/league','LeagueController@createLeague');
+
 Route::post('/game_two','Game@index_player_two')->name('game') ;
 
-//Route::get('/game', function (){
-//
-//        return view('welcome') ;
-//
-//})->name('newGame') ;
+Route::get('/game/{id}','Game@index')->name('newGame') ;
 
 Route::post('/game_one','Game@index_player_one')->name('gameLaunch') ;
 
@@ -37,7 +35,9 @@ Route::get('/one_on_one','Game@one_on_one');
 Route::get('/battle/{id}','Game@battleRequest') ;
 
 Route::get('/markAsRead', function (){
-    auth()->user()->unreadNotifications->markAsRead() ;
+    $_user = \Illuminate\Support\Facades\Auth::user();
+    $_user->unreadNotifications->markAsRead() ;
+//    return back() ;
 });
 
 //Route::get('/notifications/{id}','NotificationController@acceptGame');

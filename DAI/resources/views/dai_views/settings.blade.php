@@ -29,16 +29,16 @@
                 </a>
             </li>
 
-            <li class="nav-item ">
-                <a class="nav-link" href="{{url('/notifications')}}">
-                    <i class="material-icons">notifications</i>
-                    <p>Notifications</p>
-                </a>
-            </li>
+            {{--<li class="nav-item ">--}}
+                {{--<a class="nav-link" href="{{url('/notifications')}}">--}}
+                    {{--<i class="material-icons">notifications</i>--}}
+                    {{--<p>Notifications</p>--}}
+                {{--</a>--}}
+            {{--</li>--}}
 
             <li class="nav-item active">
                 <a class="nav-link" href="{{url('/settings')}}">
-                    <i class="material-icons">build</i>
+                    <i class="material-icons">settings</i>
                     <p>Settings</p>
                 </a>
             </li>
@@ -51,12 +51,12 @@
                 {{--</a>--}}
             {{--</li>--}}
 
-            <li class="nav-item ">
-                <a class="nav-link" href="{{url('/users')}}">
-                    <i class="material-icons">person</i>
-                    <p>Users</p>
-                </a>
-            </li>
+            {{--<li class="nav-item ">--}}
+                {{--<a class="nav-link" href="{{url('/users')}}">--}}
+                    {{--<i class="material-icons">person</i>--}}
+                    {{--<p>Users</p>--}}
+                {{--</a>--}}
+            {{--</li>--}}
 
         </ul>
     </div>

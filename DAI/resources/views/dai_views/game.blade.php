@@ -35,38 +35,38 @@
         <h1 style="font-family: courier; color: white;"><center>Guessed Numbers</center></h1>
 
 
-        {{--<table>--}}
-            {{--<tr>--}}
-                {{--<th><center>player</center></th>--}}
-                {{--<th><center>number guessed</center></th>--}}
+        <table>
+            <tr>
+                <th><center>player</center></th>
+                <th><center>number guessed</center></th>
 
-            {{--</tr>--}}
-            {{--<tr>--}}
-                {{--<td><center>1</center></td>--}}
-                {{--<td><center>123</center></td>--}}
+            </tr>
+            <tr>
+                <td><center>1</center></td>
+                <td><center>123</center></td>
 
-            {{--</tr>--}}
-            {{--<tr>--}}
-                {{--<td><center>2</center></td>--}}
-                {{--<td><center>657</center></td>--}}
-            {{--</tr>--}}
-            {{--<tr>--}}
-                {{--<td><center>1</center></td>--}}
-                {{--<td><center>983</center></td>--}}
-            {{--</tr>--}}
-            {{--<tr>--}}
-                {{--<td><center>2</center></td>--}}
-                {{--<td><center>387</center></td>--}}
-            {{--</tr>--}}
-            {{--<tr>--}}
-                {{--<td><center>1</center></td>--}}
-                {{--<td><center>257</center></td>--}}
-            {{--</tr>--}}
-            {{--<tr>--}}
-                {{--<td><center>2</center></td>--}}
-                {{--<td><center>121</center></td>--}}
-            {{--</tr>--}}
-        {{--</table>--}}
+            </tr>
+            <tr>
+                <td><center>2</center></td>
+                <td><center>657</center></td>
+            </tr>
+            <tr>
+                <td><center>1</center></td>
+                <td><center>983</center></td>
+            </tr>
+            <tr>
+                <td><center>2</center></td>
+                <td><center>387</center></td>
+            </tr>
+            <tr>
+                <td><center>1</center></td>
+                <td><center>257</center></td>
+            </tr>
+            <tr>
+                <td><center>2</center></td>
+                <td><center>121</center></td>
+            </tr>
+        </table>
     </div>
 
 
@@ -96,38 +96,38 @@
 
         <h1 style="font-family: courier; color: white;"><center>Report</center></h1>
 
-        {{--<table>--}}
-            {{--<tr>--}}
-                {{--<th><center>dead</center></th>--}}
-                {{--<th><center>injured</center></th>--}}
+        <table>
+            <tr>
+                <th><center>dead</center></th>
+                <th><center>injured</center></th>
 
-            {{--</tr>--}}
-            {{--<tr>--}}
-                {{--<td><center>1</center></td>--}}
-                {{--<td><center>0</center></td>--}}
+            </tr>
+            <tr>
+                <td><center>1</center></td>
+                <td><center>0</center></td>
 
-            {{--</tr>--}}
-            {{--<tr>--}}
-                {{--<td><center>1</center></td>--}}
-                {{--<td><center>0</center></td>--}}
-            {{--</tr>--}}
-            {{--<tr>--}}
-                {{--<td><center>2</center></td>--}}
-                {{--<td><center>1</center></td>--}}
-            {{--</tr>--}}
-            {{--<tr>--}}
-                {{--<td><center>0</center></td>--}}
-                {{--<td><center>3</center></td>--}}
-            {{--</tr>--}}
-            {{--<tr>--}}
-                {{--<td><center>1</center></td>--}}
-                {{--<td><center>2</center></td>--}}
-            {{--</tr>--}}
-            {{--<tr>--}}
-                {{--<td><center>0</center></td>--}}
-                {{--<td><center>0</center></td>--}}
-            {{--</tr>--}}
-        {{--</table>--}}
+            </tr>
+            <tr>
+                <td><center>1</center></td>
+                <td><center>0</center></td>
+            </tr>
+            <tr>
+                <td><center>2</center></td>
+                <td><center>1</center></td>
+            </tr>
+            <tr>
+                <td><center>0</center></td>
+                <td><center>3</center></td>
+            </tr>
+            <tr>
+                <td><center>1</center></td>
+                <td><center>2</center></td>
+            </tr>
+            <tr>
+                <td><center>0</center></td>
+                <td><center>0</center></td>
+            </tr>
+        </table>
 
     </div>
 

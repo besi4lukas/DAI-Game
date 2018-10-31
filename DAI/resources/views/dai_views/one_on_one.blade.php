@@ -29,16 +29,16 @@
                 </a>
             </li>
 
-            <li class="nav-item ">
-                <a class="nav-link" href="{{url('/notifications')}}">
-                    <i class="material-icons">notifications</i>
-                    <p>Notifications</p>
-                </a>
-            </li>
+            {{--<li class="nav-item ">--}}
+                {{--<a class="nav-link" href="{{url('/notifications')}}">--}}
+                    {{--<i class="material-icons">notifications</i>--}}
+                    {{--<p>Notifications</p>--}}
+                {{--</a>--}}
+            {{--</li>--}}
 
             <li class="nav-item ">
                 <a class="nav-link" href="{{url('/settings')}}">
-                    <i class="material-icons">build</i>
+                    <i class="material-icons">settings</i>
                     <p>Settings</p>
                 </a>
             </li>
@@ -51,12 +51,12 @@
                 {{--</a>--}}
             {{--</li>--}}
 
-            <li class="nav-item ">
-                <a class="nav-link" href="{{url('/users')}}">
-                    <i class="material-icons">person</i>
-                    <p>Users</p>
-                </a>
-            </li>
+            {{--<li class="nav-item ">--}}
+                {{--<a class="nav-link" href="{{url('/users')}}">--}}
+                    {{--<i class="material-icons">person</i>--}}
+                    {{--<p>Users</p>--}}
+                {{--</a>--}}
+            {{--</li>--}}
 
         </ul>
     </div>
@@ -75,12 +75,11 @@
 @section('content')
 
     <?php
-
             $user = \Illuminate\Support\Facades\Auth::user();
             $coins = \Illuminate\Support\Facades\DB::select('select user_coins from user__profiles where user_id = ?',[$user->id]);
-
             $players = \Illuminate\Support\Facades\DB::select('select * from user__profiles where user_id != ?',[$user->id]) ;
-    ?>
+            $count = 0 ;
+            ?>
     <div class="row">
         <div class="col-md-4">
 
@@ -97,6 +96,27 @@
                         {{--<i class="material-icons">date_range</i> Last 24 Hours--}}
                     {{--</div>--}}
                 {{--</div>--}}
+            </div>
+            <br>
+
+            <div class="card card-stats">
+                <div class="card-header card-header-success card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">videogame_asset</i>
+                    </div>
+                    <p class="card-category">Active Games</p>
+                    <h3 class="card-title"></h3>
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table table-hover">
+                        <tbody>@foreach($active_games as $active_game)
+                                <tr>
+                                <td> <a href="{{url('/game',$game_id[$count])}}"> Active Game with {{$active_game->username}}</a></td>
+                                </tr>
+                                <p hidden>{{$count += 1 }} </p>
+                      @endforeach</tbody>
+                    </table>
+                </div>
             </div>
 
         </div>

@@ -1,3 +1,4 @@
 function markNotificationAsRead() {
-    $.get('/markAsRead') ;
+    // $.get("/markAsRead") ;
+    alert('clicked') ;
 }

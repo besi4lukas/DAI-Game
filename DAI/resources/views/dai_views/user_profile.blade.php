@@ -29,16 +29,16 @@
                 </a>
             </li>
 
-            <li class="nav-item ">
-                <a class="nav-link" href="{{url('/notifications')}}">
-                    <i class="material-icons">notifications</i>
-                    <p>Notifications</p>
-                </a>
-            </li>
+            {{--<li class="nav-item ">--}}
+                {{--<a class="nav-link" href="{{url('/notifications')}}">--}}
+                    {{--<i class="material-icons">notifications</i>--}}
+                    {{--<p>Notifications</p>--}}
+                {{--</a>--}}
+            {{--</li>--}}
 
             <li class="nav-item ">
                 <a class="nav-link" href="{{url('/settings')}}">
-                    <i class="material-icons">build</i>
+                    <i class="material-icons">settings</i>
                     <p>Settings</p>
                 </a>
             </li>
@@ -51,12 +51,12 @@
                 {{--</a>--}}
             {{--</li>--}}
 
-            <li class="nav-item ">
-                <a class="nav-link" href="{{url('/users')}}">
-                    <i class="material-icons">person</i>
-                    <p>Users</p>
-                </a>
-            </li>
+            {{--<li class="nav-item ">--}}
+                {{--<a class="nav-link" href="{{url('/users')}}">--}}
+                    {{--<i class="material-icons">person</i>--}}
+                    {{--<p>Users</p>--}}
+                {{--</a>--}}
+            {{--</li>--}}
 
         </ul>
     </div>
@@ -76,73 +76,79 @@
 @section('content')
 
     <?php
-
+            if(\Illuminate\Support\Facades\Auth::check()){
             $user = \Illuminate\Support\Facades\Auth::user();
             $email = \Illuminate\Support\Facades\DB::select('select email from users where id = ?',[$user->id]);
+            }
     ?>
 
     <div class="content">
         <div class="container-fluid">
             <div class="row">
+                <div class="col-md-4">
+                    <div class="card card-profile">
+                    <div class="card-avatar">
+                    <a href="#pablo">
+                    {{--<img class="img" src="{{asset('temp/assets/img/faces/marc.jpg')}}" />--}}
+                    <img class="img" src="https://www.gravatar.com/avatar/{{md5($email[0]->email)}}?d=robohash" />
+                    </a>
+                    </div>
+                    <div class="card-body">
+                    <h6 class="card-category">{{$profile[0]->level}}</h6>
+                    <h4 class="card-title">{{$profile[0]->username}}</h4>
+                        <h5> {{$profile[0]->user_coins}} dai</h5>
+
+                        <p class="card-description">
+
+                        </p>
+                    {{--<a href="#pablo" class="btn btn-primary btn-round"></a>--}}
+                    </div>
+                    </div>
+
+
+                </div>
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title">Edit Profile</h4>
-                            <p class="card-category">Complete your profile</p>
-                        </div>
-                        <div class="card-body">
-                            <form method="POST">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">Username</label>
-                                            <input type="text" class="form-control" name="username" value="{{$profile[0]->username}}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">Email address</label>
-                                            <input type="email" class="form-control" name="email" value="{{$email[0]->email}}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">First Name</label>
-                                            <input type="text" class="form-control" name="firstName" value="{{$profile[0]->firstName}}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">Last Name</label>
-                                            <input type="text" class="form-control" name="lastName" value="{{$profile[0]->lastName}}">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
-                                <div class="clearfix"></div>
-                                {{ csrf_field() }}
-                            </form>
-                        </div>
+                             <h4 class="card-title">Edit Profile</h4>
+                                {{--<p class="card-category">Complete your profile</p>--}}
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card card-profile">
-                        <div class="card-avatar">
-                            <a href="#pablo">
-                                <img class="img" src="{{asset('temp/assets/img/faces/marc.jpg')}}" />
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-category">Mansa Musa</h6>
-                            <h4 class="card-title">{{$profile[0]->username}}</h4>
-                            {{--<p class="card-description">--}}
-                               {{----}}
-                            {{--</p>--}}
-                            {{--<a href="#pablo" class="btn btn-primary btn-round">Follow</a>--}}
-                        </div>
+                    <div class="card-body">
+                        <form method="POST">
+                             <div class="row">
+                                 <div class="col-md-3">
+                                     <div class="form-group">
+                    <label class="bmd-label-floating">Username</label>
+                    <input type="text" class="form-control" name="username" value="{{$profile[0]->username}}">
+                    </div>
+                    </div>
+                    <div class="col-md-4">
+                    <div class="form-group">
+                    <label class="bmd-label-floating">Email address</label>
+                    <input type="email" class="form-control" name="email" value="{{$email[0]->email}}">
+                    </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group">
+                    <label class="bmd-label-floating">First Name</label>
+                    <input type="text" class="form-control" name="firstName" value="{{$profile[0]->firstName}}">
+                    </div>
+                    </div>
+                    <div class="col-md-6">
+                    <div class="form-group">
+                    <label class="bmd-label-floating">Last Name</label>
+                    <input type="text" class="form-control" name="lastName" value="{{$profile[0]->lastName}}">
+                    </div>
+                    </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
+                    <div class="clearfix"></div>
+                    {{ csrf_field() }}
+                    </form>
+                    </div>
                     </div>
                 </div>
             </div>

@@ -15,6 +15,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- CSS Files -->
     <link href="{{asset('temp/assets/css/material-dashboard.css?v=2.1.0')}}" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Pusher Api library -->
+    <script src="https://js.pusher.com/4.3/pusher.min.js"></script>
 
 
 
@@ -76,11 +80,11 @@
                             </li>
                             <li class="nav-item dropdown">
 
-                                <a class="nav-link"  href="javscript:void(0)"
+                                <a class="nav-link" href=""
                                    id="navbarDropdownMenuLink"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="markNotificationAsRead()">
-                                    <i class="material-icons" data-toggle="dropdown">notifications</i>
-                                    <span class="notification">{{count(auth()->user()->unreadNotifications)}}</span>
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="mark()">
+                                    <i class="material-icons" data-toggle="dropdown" id="notify">notifications</i>
+                                    <span class="notification" id="myBadge">{{count(auth()->user()->unreadNotifications)}}</span>
                                     <p class="d-lg-none d-md-block">
                                         Some Actions
                                     </p>
@@ -98,7 +102,7 @@
                             </li>
 
                             <li class="nav-item dropdown">
-                                <a class="nav-link" href="javascript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="material-icons">person</i>
                                     <p class="d-lg-none d-md-block">
                                         Account
@@ -129,7 +133,7 @@
 
                         <!-- Modal Header -->
                         <div class="modal-header">
-                            <h4 class="modal-title">Enter your game number</h4>
+                            <h4 class="modal-title">Game Number</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
 
@@ -137,7 +141,7 @@
                         <div class="modal-body dark-edition">
                             <form method="POST" action="{{route('gameLaunch')}}">
                                 <input type="hidden" id="game_id" class="form-control" name="game_id" value="">
-                                <input type="text" class="form-control" name="number" >
+                                <input type="text" class="form-control" name="number" placeholder="enter game number" required autocomplete="off">
                                 <button type="submit" class="btn btn-primary pull-right">Confirm</button>
                                 {{ csrf_field() }}
                             </form>
@@ -163,7 +167,7 @@
 
                         <!-- Modal Header -->
                         <div class="modal-header">
-                            <h4 class="modal-title">Enter your game number</h4>
+                            <h4 class="modal-title">Game Number</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
 
@@ -171,7 +175,7 @@
                         <div class="modal-body dark-edition">
                             <form method="POST" action="{{route('game')}}">
                                 <input type="hidden" id="player_one" name="player_one" value="">
-                                <input type="text" class="form-control" name="number" >
+                                <input type="text" class="form-control" name="number" placeholder="enter game number" required autocomplete="off">
                                 <button type="submit" class="btn btn-primary pull-right">Confirm</button>
                                 {{ csrf_field() }}
                             </form>
@@ -220,8 +224,48 @@
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{asset('temp/assets/js/material-dashboard.js?v=2.1.0')}}"></script>
 
+    {{--pusher client scripts --}}
+    <script>
 
-<script>
+        var pusher = new Pusher('afb6c7a8250bde3101f3', {
+            cluster: 'eu',
+            forceTLS: true
+        });
+
+
+        var gameRequestChannel = pusher.subscribe('new-request-channel') ;
+            gameRequestChannel.bind('App\\Events\\newRequest', function (data) {
+                if(data.destinationUserId = '{{ $user->id }}'){
+                    location.reload() ;
+                }
+            })
+
+    </script>
+
+    {{--This is the script for marking a notification as read --}}
+    <script>
+
+        function mark() {
+
+            $.ajax({
+                url: 'markAsRead',
+                type: 'get',
+                dataType: 'html'
+
+            }) ;
+
+            $("button").click(function(){
+                $("p").hide(1000);
+            });
+
+            setTimeout(function(){ location.reload(); }, 7000);
+
+        }
+
+    </script>
+
+
+    <script>
 
     function add(){
         $('#myModalTwo').on('show.bs.modal', function (event) { // id of the modal with event
@@ -264,9 +308,6 @@
     }
 
 </script>
-
-
-
 
 
     <script>
@@ -433,13 +474,13 @@
     </script>
 
 
-    <script>
-        $(document).ready(function() {
-            // Javascript method's body can be found in assets/js/demos.js
-            md.initDashboardPageCharts();
+    {{--<script>--}}
+        {{--$(document).ready(function() {--}}
+            {{--// Javascript method's body can be found in assets/js/demos.js--}}
+            {{--md.initDashboardPageCharts();--}}
 
-        });
-    </script>
+        {{--});--}}
+    {{--</script>--}}
 
 </body>
 

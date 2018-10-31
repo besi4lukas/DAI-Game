@@ -22,7 +22,7 @@ function posting() {
     }
     console.log(toSubmit);
 
-    axios.post('/api/guess', toSubmit
+    axios.post('/projectx/dai/public/api/guess', toSubmit
     ).then(function (response) {
         report = response.data[0][0];
         console.log(report);
