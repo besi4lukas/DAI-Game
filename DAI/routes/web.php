@@ -34,6 +34,7 @@ Route::get('/one_on_one','Game@one_on_one');
 
 Route::get('/battle/{id}','Game@battleRequest') ;
 
+
 Route::get('/markAsRead', function (){
     $_user = \Illuminate\Support\Facades\Auth::user();
     $_user->unreadNotifications->markAsRead() ;
@@ -55,7 +56,10 @@ Route::get('/notifications','NotificationController@index') ;
 
 Route::get('/settings','SettingController@index') ;
 
-Route::get('/user_league','LeagueController@user_league');
+Route::get('/user_league/{id}','LeagueController@user_league');
+
+Route::get('/join/{id}','LeagueController@joinLeague') ;
+
 
 
 

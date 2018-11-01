@@ -24,6 +24,7 @@ class CreateGamesTable extends Migration
             $table->integer('game_no_one')->unsigned();
             $table->integer('game_no_two')->unsigned();
             $table->integer('player_turn')->unsigned() ;
+            $table->string('status',20)->nullable();
             $table->timestamps();
         });
     }

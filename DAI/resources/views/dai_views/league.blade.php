@@ -72,7 +72,10 @@
 @endsection
 
 @section('content')
-
+<?php
+    $count = 0 ;
+    $count_ = 0 ;
+?>
 
     <div class="container-fluid">
         <div class="card">
@@ -91,15 +94,15 @@
                     <th>Status</th>
 
                     </thead>
-                    <tbody>
+                    <tbody>@foreach($leagues_user as $league_user)
                     <tr>
-                        <td>Dakota Rice</td>
-                        <td>738</td>
-                        <td>Public</td>
-                        <td> <a href="{{url('/user_league')}}" class="btn btn-info btn-round btn-sm">View</a></td>
+                        <td>{{$league_user->league_name}}</td>
+                        <td>{{$league_players[$count]}}</td>
+                        <td>{{$league_user->status}}</td>
+                        <td> <a href="{{url('/user_league',$league_user->id)}}" class="btn btn-info btn-round btn-sm">View</a></td>
                     </tr>
-
-                    </tbody>
+                        <p hidden> {{$count += 1 }}</p>
+                  @endforeach </tbody>
                 </table>
             </div>
         </div>
@@ -108,7 +111,7 @@
 
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title">All Leagues</h4>
+                <h4 class="card-title">Other Leagues</h4>
                 <p class="card-category"></p>
             </div>
             <div class="card-body table-responsive">
@@ -118,16 +121,16 @@
                     <th>Players</th>
                     <th>Status</th>
                     </thead>
-                    <tbody>
+                    <tbody>@foreach($leagues_all as $league_all)
 
                     <tr>
-                        <td>Dakota Rice</td>
-                        <td>$36,738</td>
-                        <td>Public</td>
-                        <td><a href="#pablo" class="btn btn-primary btn-round btn-sm">Join</a></td>
+                        <td>{{$league_all->league_name}}</td>
+                        <td>{{$league_all_players[$count_]}}</td>
+                        <td>{{$league_all->status}}</td>
+                        <td><a href="{{url('/join',$league_all->id)}}" class="btn btn-primary btn-round btn-sm">Join</a></td>
                     </tr>
-
-                    </tbody>
+                            <p hidden>{{$count_ += 1}}</p>
+                 @endforeach </tbody>
                 </table>
             </div>
         </div>

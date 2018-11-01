@@ -240,6 +240,14 @@
                 }
             })
 
+        var playerTurnChannel = pusher.subscribe('new-turn-channel') ;
+            playerTurnChannel.bind('App\\Events\\playerTurn', function (data) {
+                if (data.destinationUserId = '{{$user->id}}'){
+                    location.reload() ;
+                }
+            })
+
+
     </script>
 
     {{--This is the script for marking a notification as read --}}
@@ -257,8 +265,6 @@
             $("button").click(function(){
                 $("p").hide(1000);
             });
-
-            setTimeout(function(){ location.reload(); }, 7000);
 
         }
 

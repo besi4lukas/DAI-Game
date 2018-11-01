@@ -22,6 +22,10 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\newRequest' => [
             'App\Listeners\RequestListener',
         ],
+
+        'App\Events\playerTurn' => [
+            'App\Listeners\TurnListener',
+        ],
     ];
 
     /**

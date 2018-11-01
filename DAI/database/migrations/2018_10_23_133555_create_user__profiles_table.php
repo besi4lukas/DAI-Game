@@ -18,7 +18,7 @@ class CreateUserProfilesTable extends Migration
             $table->string('username',20);
             $table->string('firstName',50);
             $table->string('lastName',50);
-            $table->text('user_image');
+            $table->text('user_image')->nullable();
             $table->integer('user_coins');
             $table->integer('user_id')->unsigned();
             $table->index('user_id') ;

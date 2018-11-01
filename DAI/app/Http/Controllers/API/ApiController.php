@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\playerTurn;
+use App\Game;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -69,24 +71,30 @@ class ApiController extends Controller
         $player_id = $request->player_id ;
         $game_id = $request->game_id ;
         $other_number = 0 ;
-        $dead = 0 ;
-        $injured = 0 ;
+        $sender_id = null ;
 
 
-        $game = DB::select('select * from games where id = ?',[$game_id]);
 
-//        dd($game) ;
-        if($game[0]->player_turn == 1){
+        $game = Game::where('id',$game_id)->first();
 
-            $other_number = $game[0]->game_no_two ;
+
+
+        if($game->player_turn == 1){
+
+            $other_number = $game->game_no_two ;
+            $game->player_turn = 2 ;
+            $sender_id = $game->player_two ;
 
         }
 
         else{
 
-            $other_number = $game[0]->game_no_one ;
+            $other_number = $game->game_no_one ;
+            $game->player_turn = 1 ;
+            $sender_id = $game->player_one ;
         }
 
+        event(new playerTurn($sender_id)) ;
 
         return response()->json([$this->compare($guess_number,$other_number)],200);
     }
