@@ -21,8 +21,8 @@ class CreateGamesTable extends Migration
             $table->index('player_two') ;
             $table->foreign('player_one')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('player_two')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('game_no_one')->unsigned();
-            $table->integer('game_no_two')->unsigned();
+            $table->integer('game_no_one')->unsigned()->nullable();
+            $table->integer('game_no_two')->unsigned()->nullable();
             $table->integer('player_turn')->unsigned() ;
             $table->string('status',20)->nullable();
             $table->timestamps();

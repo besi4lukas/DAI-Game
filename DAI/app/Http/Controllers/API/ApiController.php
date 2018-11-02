@@ -94,7 +94,6 @@ class ApiController extends Controller
             $game->save() ;
         }
 
-
         event(new playerTurn($sender_id)) ;
 
         return response()->json([$this->compare($guess_number,$other_number)],200);
