@@ -240,12 +240,6 @@
                 }
             })
 
-        var playerTurnChannel = pusher.subscribe('new-turn-channel') ;
-            playerTurnChannel.bind('App\\Events\\playerTurn', function (data) {
-                if (data.destinationUserId = '{{$user->id}}'){
-                    location.reload() ;
-                }
-            })
 
 
     </script>

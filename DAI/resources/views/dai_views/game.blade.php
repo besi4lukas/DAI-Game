@@ -5,11 +5,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="{{asset('temp/assets/css/game.css')}}">
-    <script type="text/javascript" src="{{asset('temp/assets/js/dead.js')}}"></script>
+
+    <!-- Pusher Api library -->
+    <script src="https://js.pusher.com/4.3/pusher.min.js"></script>
+
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
+
+
 </head>
 <body>
 
@@ -133,9 +141,27 @@
 
 </div>
 
+<script>
+
+    var pusher = new Pusher('afb6c7a8250bde3101f3', {
+        cluster: 'eu',
+        forceTLS: true
+    });
+
+    var playerTurnChannel = pusher.subscribe('new-turn-channel') ;
+    playerTurnChannel.bind('App\\Events\\playerTurn', function (data) {
+        if (data.destinationUserId = '{{$user_id}}'){
+            location.reload() ;
+        }
+    })
+
+</script>
 
 
 
+<script type="text/javascript" src="{{asset('temp/assets/js/dead.js')}}"></script>
+{{--<script src="{{asset('./node_modules/axios/dist/axios.js')}}"></script>--}}
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 
     function isNumberKey(evt) {

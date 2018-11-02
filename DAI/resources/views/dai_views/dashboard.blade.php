@@ -66,11 +66,14 @@
 
 @section('navbar')
                 <div class="navbar-wrapper">
-                    <a class="navbar-brand" href="javascript:void(0)">Dashboard</a>
+                    <a class="navbar-brand" href="">Dashboard</a>
                 </div>
 @endsection
 
 @section('content')
+    <?php
+            $count = 0 ;
+    ?>
 
     <div class="content">
         <div class="container-fluid">
@@ -116,7 +119,7 @@
                                 <i class="material-icons">gamepad</i>
                             </div>
                             <p class="card-category">Games Played</p>
-                            <h3 class="card-title">75</h3>
+                            <h3 class="card-title">{{$data[0]['played'][0]->count}}</h3>
                         </div>
                         {{--<div class="card-footer">--}}
                             {{--<div class="stats">--}}
@@ -159,30 +162,14 @@
                                 <th>Title</th>
                                 </thead>
                                 <tbody>
+                                @foreach($leaders as $leader)
                                 <tr>
-
-                                    <td>Dakota Rice</td>
-                                    <td>$36,738</td>
-                                    <td>Niger</td>
+                                    <td>{{$leader->username}}</td>
+                                    <td>{{$leader->user_coins}}</td>
+                                    <td>{{$title[$count]}}</td>
                                 </tr>
-                                <tr>
-
-                                    <td>Minerva Hooper</td>
-                                    <td>$23,789</td>
-                                    <td>Curaçao</td>
-                                </tr>
-                                <tr>
-
-                                    <td>Sage Rodriguez</td>
-                                    <td>$56,142</td>
-                                    <td>Netherlands</td>
-                                </tr>
-                                <tr>
-
-                                    <td>Philip Chaney</td>
-                                    <td>$38,735</td>
-                                    <td>Korea, South</td>
-                                </tr>
+                                    <p hidden>{{$count += 1}}</p>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

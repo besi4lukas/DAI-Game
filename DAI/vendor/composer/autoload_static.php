@@ -347,6 +347,8 @@ class ComposerStaticInitf4bd4917fac53373e2793b037327d458
 
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
+        'App\\Events\\newRequest' => __DIR__ . '/../..' . '/app/Events/newRequest.php',
+        'App\\Events\\playerTurn' => __DIR__ . '/../..' . '/app/Events/playerTurn.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Game' => __DIR__ . '/../..' . '/app/Game.php',
         'App\\Guess' => __DIR__ . '/../..' . '/app/Guess.php',
@@ -372,8 +374,11 @@ class ComposerStaticInitf4bd4917fac53373e2793b037327d458
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\League' => __DIR__ . '/../..' . '/app/League.php',
+        'App\\LeagueGamePlayed' => __DIR__ . '/../..' . '/app/LeagueGamePlayed.php',
         'App\\League_Admin' => __DIR__ . '/../..' . '/app/League_Admin.php',
         'App\\League_Ranking' => __DIR__ . '/../..' . '/app/League_Ranking.php',
+        'App\\Listeners\\RequestListener' => __DIR__ . '/../..' . '/app/Listeners/RequestListener.php',
+        'App\\Listeners\\TurnListener' => __DIR__ . '/../..' . '/app/Listeners/TurnListener.php',
         'App\\Notifications\\AcceptRequest' => __DIR__ . '/../..' . '/app/Notifications/AcceptRequest.php',
         'App\\Notifications\\AcceptRequestTwo' => __DIR__ . '/../..' . '/app/Notifications/AcceptRequestTwo.php',
         'App\\Notifications\\DeclineRequest' => __DIR__ . '/../..' . '/app/Notifications/DeclineRequest.php',

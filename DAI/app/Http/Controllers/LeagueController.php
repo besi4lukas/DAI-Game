@@ -24,12 +24,14 @@ class LeagueController extends Controller
             $league_players = array() ;
             $count = 0 ;
             $count_ = 0 ;
+            $id_array = array() ;
 
             foreach ($league_rankings as $league_ranking){
 
                 $name = League::where('id',$league_ranking->league_id)->first();
                 $players = DB::select('select count(league_id) as players from league__rankings where league_id =?',[$league_ranking->league_id]);
                 $leagues_user[$count] = $name ;
+                $id_array[$count] = $name->id ;
                 $league_players[$count] = $players[0]->players ;
 
                 $count += 1 ;
@@ -45,7 +47,7 @@ class LeagueController extends Controller
                 $count_ += 1 ;
             }
 
-            return view('dai_views.league',compact('leagues_all','league_all_players','leagues_user','league_players'));
+            return view('dai_views.league',compact('leagues_all','league_all_players','leagues_user','league_players','id_array'));
 
         }else{
             return redirect('/login') ;
@@ -53,9 +55,55 @@ class LeagueController extends Controller
     }
 
 
-    public function user_league(){
+    public function user_league($id){
 
-        return view('dai_views.user_league');
+        if (Auth::check()) {
+
+            $league = League::where('id',$id)->first() ;
+            $player_names = array() ;
+            $score = array() ;
+            $coins = array() ;
+            $count = 0 ;
+            $user = Auth::user()->id ;
+            $status = "won" ;
+            $winningRatio = 0 ;
+            $points = 0 ;
+
+            $gamesplayed = DB::select('select count(*) as count from league_game_playeds where user_id = ?',[$user]) ;
+
+            $gamesWon = DB::select('select count(*) as count from league_game_playeds where status = ?',[$status]);
+
+            $score_user = DB::select('select score from league__rankings where league_id = ? and user_id = ?',[$id,$user]);
+
+            if (! $gamesplayed[0]->count == 0){
+                $winningRatio = $gamesWon[0]->count / $gamesplayed[0]->count ;
+                $points = $winningRatio * $score_user[0]->score ;
+            }
+
+
+            $league_rankings = DB::select('select * from league__rankings where league_id = ? order by  score DESC ',[$id]);
+
+            foreach ($league_rankings as $league_ranking){
+
+                if (!($league_ranking->user_id == $user)) {
+
+                    $user_profile = DB::select('select * from user__profiles where user_id = ?', [$league_ranking->user_id]);
+
+                    $player_names[$count] = $user_profile[0]->username;
+                    $score[$count] = $league_ranking->score;
+                    $coins[$count] = $user_profile[0]->user_coins;
+
+                    $count += 1;
+
+                }
+            }
+
+
+            return view('dai_views.user_league',compact('league','player_names','score','coins','winningRatio','points'));
+
+        } else{
+            return redirect('/login') ;
+        }
 
     }
 

@@ -74,9 +74,7 @@ class ApiController extends Controller
         $sender_id = null ;
 
 
-
         $game = Game::where('id',$game_id)->first();
-
 
 
         if($game->player_turn == 1){
@@ -84,6 +82,7 @@ class ApiController extends Controller
             $other_number = $game->game_no_two ;
             $game->player_turn = 2 ;
             $sender_id = $game->player_two ;
+            $game->save() ;
 
         }
 
@@ -92,7 +91,9 @@ class ApiController extends Controller
             $other_number = $game->game_no_one ;
             $game->player_turn = 1 ;
             $sender_id = $game->player_one ;
+            $game->save() ;
         }
+
 
         event(new playerTurn($sender_id)) ;
 

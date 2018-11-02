@@ -7,6 +7,8 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
+    'App\\Events\\newRequest' => $baseDir . '/app/Events/newRequest.php',
+    'App\\Events\\playerTurn' => $baseDir . '/app/Events/playerTurn.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Game' => $baseDir . '/app/Game.php',
     'App\\Guess' => $baseDir . '/app/Guess.php',
@@ -32,8 +34,11 @@ return array(
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\League' => $baseDir . '/app/League.php',
+    'App\\LeagueGamePlayed' => $baseDir . '/app/LeagueGamePlayed.php',
     'App\\League_Admin' => $baseDir . '/app/League_Admin.php',
     'App\\League_Ranking' => $baseDir . '/app/League_Ranking.php',
+    'App\\Listeners\\RequestListener' => $baseDir . '/app/Listeners/RequestListener.php',
+    'App\\Listeners\\TurnListener' => $baseDir . '/app/Listeners/TurnListener.php',
     'App\\Notifications\\AcceptRequest' => $baseDir . '/app/Notifications/AcceptRequest.php',
     'App\\Notifications\\AcceptRequestTwo' => $baseDir . '/app/Notifications/AcceptRequestTwo.php',
     'App\\Notifications\\DeclineRequest' => $baseDir . '/app/Notifications/DeclineRequest.php',
