@@ -19,6 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/guess','API\ApiController@guess_endpoint');
 
+Route::post('/player','API\ApiController@playerturn_endpoint');
+
 //Route::get('/guess',function () {
 //    return "Api for the guesses";
 //} );

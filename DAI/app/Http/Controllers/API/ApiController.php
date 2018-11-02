@@ -94,7 +94,7 @@ class ApiController extends Controller
             $game->save() ;
         }
 
-//        event(new playerTurn($sender_id)) ;
+        event(new playerTurn($sender_id)) ;
 
         return response()->json([$this->compare($guess_number,$other_number)],200);
     }
@@ -140,6 +140,23 @@ class ApiController extends Controller
 
 
     }
+
+    public function playerturn_endpoint(Request $request){
+
+        $id = $request->game_id ;
+        $game = Game::where('id',$id)->first();
+        $player_id = null ;
+
+        if ($game->player_turn == 1){
+            $player_id = $game->player_one;
+        }else{
+            $player_id = $game->player_two ;
+        }
+
+        return $player_id ;
+    }
+
+
 
 
 

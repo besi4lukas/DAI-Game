@@ -1,4 +1,19 @@
-// var axios = require('axios');
+
+var game_id = parseInt(document.getElementById("game_id").value) ;
+var idnumber = parseInt(document.getElementById("idnumber").value) ;
+$.post("/projectx/dai/public/api/player",
+    {
+        "game_id": game_id
+    } )
+    .done(function (response) {
+        report = response;
+        console.log(report);
+        console.log(idnumber);
+        document.getElementById("coin").disabled = !(idnumber == report);
+    }).fail(function (error){
+    console.log(error);
+});
+
 
 function isNumberKey(evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode;
@@ -31,14 +46,5 @@ function posting() {
     }).fail(function (error){
             console.log(error);
     });
-
-    // axios.post('/projectx/dai/public/api/guess', toSubmit
-    // ).then(function (response) {
-    //     report = response.data[0][0];
-    //     console.log(report);
-    // }).catch(function (error){
-    //     console.log(error);
-    // })
-
 
 }
