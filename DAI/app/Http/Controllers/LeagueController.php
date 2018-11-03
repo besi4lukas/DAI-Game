@@ -16,7 +16,8 @@ class LeagueController extends Controller
 
         if (Auth::check()) {
             $user = Auth::user()->id;
-            $all_leagues = League_Ranking::where('user_id','!=',$user)->get() ;
+//            $all_leagues = League_Ranking::where('user_id','!=',$user)->get() ;
+            $all_leagues = DB::select('select distinct league_id from league__rankings');
             $league_rankings = League_Ranking::where('user_id', $user)->get() ;
             $leagues_all = array();
             $league_all_players = array() ;

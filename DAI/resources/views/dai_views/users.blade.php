@@ -122,10 +122,6 @@
 
                                         @endforeach
 
-
-
-
-
                                     </tbody>
                                 </table>
                             </div>

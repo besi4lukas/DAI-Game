@@ -161,24 +161,16 @@
                     <th>Status</th>
                     </thead>
                     <tbody>@foreach($leagues_all as $league_all)
-                        @if( !in_array($league_all->id,$id_array) )
+
+                        @if( ! in_array($league_all->id,$id_array) )
                     <tr>
                         <td>{{$league_all->league_name}}</td>
                         <td>{{$league_all_players[$count_]}}</td>
                         <td>{{$league_all->status}}</td>
                         <td><a href="{{url('/join',$league_all->id)}}" class="btn btn-primary btn-round btn-sm">Join</a></td>
                     </tr>
-                            <p hidden>{{$count_ += 1}}</p>
-                    @else
-                            <tr>
-                                <td>{{$league_all->league_name}}</td>
-                                <td>{{$league_all_players[$count_]}}</td>
-                                <td>{{$league_all->status}}</td>
-                                <td><button class="btn btn-primary btn-round btn-sm"
-                                            disabled="disabled" > Joined </button> </td>
-                            </tr>
-                            <p hidden>{{$count_ += 1}}</p>
                         @endif
+                        <p hidden>{{$count_ += 1}}</p>
                  @endforeach </tbody>
                 </table>
             </div>
