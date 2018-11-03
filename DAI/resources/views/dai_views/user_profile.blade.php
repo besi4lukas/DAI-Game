@@ -42,7 +42,7 @@
             {{--</li>--}}
 
             <li class="nav-item ">
-                <a class="nav-link" href="{{url('/settings')}}">
+                <a class="nav-link" href="{{url('/help')}}">
                     <i class="material-icons">help</i>
                     <p>Help</p>
                 </a>
@@ -79,7 +79,7 @@
 
 
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{url('/settings')}}">
+                    <a class="nav-link" href="{{url('/help')}}">
                         <i class="material-icons">help</i>
                         <p>Help</p>
                     </a>

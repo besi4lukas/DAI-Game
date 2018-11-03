@@ -55,7 +55,9 @@ Route::get('/delete_user/{id}','UserController@delete_user') ;
 
 Route::get('/users','UserController@users') ;
 
-Route::get('/notifications','NotificationController@index') ;
+Route::get('/notifications','NotificationController@index');
+
+Route::get('/help','SettingController@help');
 
 
 Route::get('/settings','SettingController@index') ;

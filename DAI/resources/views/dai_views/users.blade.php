@@ -1,53 +1,8 @@
 @extends('layouts.dai')
 
 @section('before_content')
-    <?php
-        $user = \Illuminate\Support\Facades\Auth::user()
-    ?>
     <div class="sidebar-wrapper">
         <ul class="nav">
-            @if($user->role == "user")
-            <li class="nav-item">
-                <a class="nav-link" href="{{url('/home')}}">
-                    <i class="material-icons">dashboard</i>
-                    <p>Dashboard</p>
-                </a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="{{url('/user_profile')}}">
-                    <i class="material-icons">person</i>
-                    <p>User Profile</p>
-                </a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="{{url('/one_on_one')}}">
-                    <i class="material-icons">videogame_asset</i>
-                    <p>One on One</p>
-                </a>
-            </li>
-
-            <li class="nav-item ">
-                <a class="nav-link" href="{{url('/league')}}">
-                    <i class="material-icons">flag</i>
-                    <p>League</p>
-                </a>
-            </li>
-
-            {{--<li class="nav-item ">--}}
-                {{--<a class="nav-link" href="{{url('/notifications')}}">--}}
-                    {{--<i class="material-icons">notifications</i>--}}
-                    {{--<p>Notifications</p>--}}
-                {{--</a>--}}
-            {{--</li>--}}
-
-            <li class="nav-item ">
-                <a class="nav-link" href="#">
-                    <i class="material-icons">help</i>
-                    <p>Help</p>
-                </a>
-            </li>
-            @else
-
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('/home')}}">
                         <i class="material-icons">dashboard</i>
@@ -78,7 +33,7 @@
 
 
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{url('/settings')}}">
+                    <a class="nav-link" href="{{url('/help')}}">
                         <i class="material-icons">help</i>
                         <p>Help</p>
                     </a>
@@ -97,7 +52,6 @@
                         <p>Users</p>
                     </a>
                 </li>
-            @endif
         </ul>
     </div>
 
