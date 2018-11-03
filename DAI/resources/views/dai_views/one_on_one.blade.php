@@ -116,7 +116,8 @@
     <?php
             $user = \Illuminate\Support\Facades\Auth::user();
             $coins = \Illuminate\Support\Facades\DB::select('select user_coins from user__profiles where user_id = ?',[$user->id]);
-            $players = \Illuminate\Support\Facades\DB::select('select * from user__profiles where user_id != ?',[$user->id]) ;
+//            $players = \Illuminate\Support\Facades\DB::select('select * from user__profiles where user_id != ?',[$user->id]) ;
+            $players = \App\User_Profile::where('user_id','!=',$user->id)->get();
             $count = 0 ;
             ?>
     <div class="row">
@@ -181,7 +182,9 @@
                             <td><a href="{{url('/battle',$player->user_id)}}" class="btn btn-primary btn-round btn-sm">Battle</a></td>
                         </tr>
 
-                        @endforeach</tbody>
+                        @endforeach
+
+                        </tbody>
                     </table>
                 </div>
             </div>

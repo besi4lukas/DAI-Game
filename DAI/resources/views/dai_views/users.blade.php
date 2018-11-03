@@ -141,6 +141,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach($users as $user)
+                                            @if($user->role == "user")
 
                                         <tr>
                                             <td>{{$user->email}}</td>
@@ -148,9 +149,23 @@
                                             <td>{{$profiles[$count]->user_coins}}</td>
                                             <td>{{$profiles[$count]->level}}</td>
                                             <td><a href="" class="btn btn-sm btn-primary"> details </a></td>
-                                            <td><a href="" class="material-icons icon-warning" >delete</a></td>
+                                            <td><a href="{{url('/admin',$user->id)}}" class="material-icons">perm_identity</a></td>
+                                            <td><a href="{{url('/delete_user',$user->id)}}" class="material-icons" >delete</a></td>
 
                                         </tr>
+                                        @else
+                                                <tr>
+                                                    <td>{{$user->email}}</td>
+                                                    <td>{{$profiles[$count]->username}}</td>
+                                                    <td>{{$profiles[$count]->user_coins}}</td>
+                                                    <td>{{$profiles[$count]->level}}</td>
+                                                    <td><a href="" class="btn btn-sm btn-primary"> details </a></td>
+                                                    <td>admin</td>
+
+
+                                                </tr>
+
+                                                @endif
                                                 <p hidden>{{$count += 1}}</p>
 
                                         @endforeach

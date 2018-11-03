@@ -5,8 +5,7 @@
 
     <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="76x76" href="{{asset('temp/assets/img/apple-icon.png')}}">
-    <link rel="icon" t
-          ype="image/png" href="{{asset('temp/assets/img/favicon.png')}}">
+    <link rel="icon" type="image/png" href="{{asset('temp/assets/img/dead.png')}}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>
         Dead And Injured
@@ -17,6 +16,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- CSS Files -->
     <link href="{{asset('temp/assets/css/material-dashboard.css?v=2.1.0')}}" rel="stylesheet" />
+    {{--<link rel="stylesheet" href="{{asset('temp/assets/css/dead.css')}}" type="text/css" />--}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!-- Pusher Api library -->
@@ -113,11 +113,13 @@
                                     </p>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                    <a href="" class="dropdown-item"> Settings </a>
                                     <a href="{{ route('logout') }}" class="dropdown-item"
                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</a>
                                     <form id="logout-form" action="{{route('logout')}}" method="post" style="display: none;">
                                         {{csrf_field()}}
                                     </form>
+
                                 </div>
                             </li>
                         </ul>
@@ -229,8 +231,8 @@
     <script src="{{asset('temp/assets/js/material-dashboard.js?v=2.1.0')}}"></script>
 
     {{--pusher client scripts --}}
-    <script>
 
+    <script>
         var pusher = new Pusher('afb6c7a8250bde3101f3', {
             cluster: 'eu',
             forceTLS: true
@@ -242,8 +244,7 @@
                 if(data.destinationUserId = '{{ $user->id }}'){
                     location.reload() ;
                 }
-            })
-
+            });
 
 
     </script>

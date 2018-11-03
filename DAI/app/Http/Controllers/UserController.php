@@ -79,4 +79,28 @@ class UserController extends Controller
             return redirect('/login') ;
         }
     }
+
+    public function make_admin($id){
+        if (Auth::check()){
+            $user = User::where('id',$id)->first();
+            $user->role = "admin" ;
+            $user->save() ;
+
+            return back() ;
+
+        }else{
+            return redirect('/login') ;
+        }
+    }
+
+    public function delete_user($id){
+        if (Auth::check()){
+
+            User::where('id',$id)->delete();
+
+            return back() ;
+        }else{
+            return redirect('/login') ;
+        }
+    }
 }

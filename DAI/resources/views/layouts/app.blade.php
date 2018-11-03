@@ -21,7 +21,7 @@
 
 
     <link rel="apple-touch-icon" sizes="76x76" href="{{asset('temp/assets/img/apple-icon.png')}}">
-    <link rel="icon" type="image/png" href="{{asset('temp/assets/img/favicon.png')}}">
+    <link rel="icon" type="image/png" href="{{asset('temp/assets/img/dead.png')}}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>
         Dead And Injured
@@ -35,7 +35,8 @@
 
 
 </head>
-<body class="dark-edition">
+<body class="dark-edition" style="background-image: url({{asset('temp/assets/img/dead.png')}});
+        background-repeat: no-repeat;">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-transparent">
             <div class="container">

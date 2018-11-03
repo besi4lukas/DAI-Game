@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\newDeclineRequest;
+use App\Events\newRequest;
 use App\Notifications\AcceptRequest;
 use App\Notifications\DeclineRequest;
 use App\User;
@@ -33,6 +35,8 @@ class NotificationController extends Controller
 
         $player_one->notify(new DeclineRequest(Auth::user()->id));
 
-        return $this->index();
+        event(new newRequest($id)) ;
+
+        return back();
     }
 }

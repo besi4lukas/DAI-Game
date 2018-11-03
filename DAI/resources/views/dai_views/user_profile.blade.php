@@ -129,10 +129,11 @@
                 <div class="col-md-4">
                     <div class="card card-profile">
                     <div class="card-avatar">
-                    <a href="#pablo">
-                    {{--<img class="img" src="{{asset('temp/assets/img/faces/marc.jpg')}}" />--}}
-                    <img class="img" src="https://www.gravatar.com/avatar/{{md5($email[0]->email)}}?d=robohash" />
-                    </a>
+                    <i>
+                    <img class="img"
+                         alt="user_image"
+                         src="https://www.gravatar.com/avatar/{{md5($email[0]->email)}}?d=robohash" />
+                    </i>
                     </div>
                     <div class="card-body">
                     <h6 class="card-category">{{$profile[0]->level}}</h6>
@@ -196,43 +197,29 @@
         </div>
     </div>
 
-    {{--<footer class="footer">--}}
-        {{--<div class="container-fluid">--}}
-            {{--<nav class="float-left">--}}
-                {{--<ul>--}}
-                    {{--<li>--}}
-                        {{--<a href="https://www.creative-tim.com">--}}
-                            {{--Creative Tim--}}
-                        {{--</a>--}}
-                    {{--</li>--}}
-                    {{--<li>--}}
-                        {{--<a href="https://creative-tim.com/presentation">--}}
-                            {{--About Us--}}
-                        {{--</a>--}}
-                    {{--</li>--}}
-                    {{--<li>--}}
-                        {{--<a href="http://blog.creative-tim.com">--}}
-                            {{--Blog--}}
-                        {{--</a>--}}
-                    {{--</li>--}}
-                    {{--<li>--}}
-                        {{--<a href="https://www.creative-tim.com/license">--}}
-                            {{--Licenses--}}
-                        {{--</a>--}}
-                    {{--</li>--}}
-                {{--</ul>--}}
-            {{--</nav>--}}
-            {{--<div class="copyright float-right" id="date">--}}
-                {{--, made with <i class="material-icons">favorite</i> by--}}
-                {{--<a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</footer>--}}
-    <script>
-        const x = new Date().getFullYear();
-        let date = document.getElementById('date');
-        date.innerHTML = '&copy; ' + x + date.innerHTML;
-    </script>
+
+    {{--<script>--}}
+        {{--// Get the modal--}}
+        {{--var modal = document.getElementById('myModal');--}}
+
+        {{--// Get the image and insert it inside the modal - use its "alt" text as a caption--}}
+        {{--var img = document.getElementById('myImg');--}}
+        {{--var modalImg = document.getElementById("img01");--}}
+        {{--var captionText = document.getElementById("caption");--}}
+        {{--img.onclick = function(){--}}
+            {{--modal.style.display = "block";--}}
+            {{--modalImg.src = this.src;--}}
+            {{--captionText.innerHTML = this.alt;--}}
+        {{--}--}}
+
+        {{--// Get the <span> element that closes the modal--}}
+        {{--var span = document.getElementsByClassName("close")[0];--}}
+
+        {{--// When the user clicks on <span> (x), close the modal--}}
+        {{--span.onclick = function() {--}}
+            {{--modal.style.display = "none";--}}
+        {{--}--}}
+    {{--</script>--}}
 
 
 @endsection

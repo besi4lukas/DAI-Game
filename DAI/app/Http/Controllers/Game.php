@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\newAcceptRequest;
 use App\Notifications\AcceptRequest;
 use App\Notifications\AcceptRequestTwo;
 use App\Notifications\DeclineRequest;
@@ -42,6 +43,7 @@ class Game extends Controller
             $game_id = $pending_game[0]->id;
             $player_one = User::where('id', intval($id))->first();
             $player_one->notify(new AcceptRequest($user_id, $game_id));
+            event(new newRequest($id)) ;
 
             return redirect()->route('newGame', ['id' => $game_id]);
 
