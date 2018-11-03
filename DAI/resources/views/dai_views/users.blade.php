@@ -102,7 +102,6 @@
                                             <td>{{$profiles[$count]->username}}</td>
                                             <td>{{$profiles[$count]->user_coins}}</td>
                                             <td>{{$profiles[$count]->level}}</td>
-                                            <td><a href="" class="btn btn-sm btn-primary"> details </a></td>
                                             <td><a href="{{url('/admin',$user->id)}}" class="material-icons">perm_identity</a></td>
                                             <td><a href="{{url('/delete_user',$user->id)}}" class="material-icons" >delete</a></td>
 
@@ -113,7 +112,6 @@
                                                     <td>{{$profiles[$count]->username}}</td>
                                                     <td>{{$profiles[$count]->user_coins}}</td>
                                                     <td>{{$profiles[$count]->level}}</td>
-                                                    <td><a href="" class="btn btn-sm btn-primary"> details </a></td>
                                                     <td>admin</td>
 
 
@@ -123,6 +121,11 @@
                                                 <p hidden>{{$count += 1}}</p>
 
                                         @endforeach
+
+
+
+
+
                                     </tbody>
                                 </table>
                             </div>
