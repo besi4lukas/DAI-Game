@@ -1,9 +1,13 @@
 @extends('layouts.dai')
 
 @section('before_content')
-
+<?php
+    $user = \Illuminate\Support\Facades\Auth::user() ;
+?>
     <div class="sidebar-wrapper">
         <ul class="nav">
+            @if($user->role == "user")
+
             <li class="nav-item">
                 <a class="nav-link" href="{{url('/home')}}">
                     <i class="material-icons">dashboard</i>
@@ -24,7 +28,7 @@
             </li>
             <li class="nav-item ">
                 <a class="nav-link" href="{{url('/league')}}">
-                    <i class="material-icons">whatshot</i>
+                    <i class="material-icons">flag</i>
                     <p>League</p>
                 </a>
             </li>
@@ -38,26 +42,65 @@
 
             <li class="nav-item active">
                 <a class="nav-link" href="{{url('/settings')}}">
-                    <i class="material-icons">settings</i>
-                    <p>Settings</p>
+                    <i class="material-icons">help</i>
+                    <p>Help</p>
                 </a>
             </li>
 
+            @else
+
             {{--for admin login--}}
-            {{--<li class="nav-item ">--}}
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{url('/home')}}">
+                        <i class="material-icons">dashboard</i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{url('/user_profile')}}">
+                        <i class="material-icons">person</i>
+                        <p>User Profile</p>
+                    </a>
+                </li>
+
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{url('/one_on_one')}}">
+                        <i class="material-icons">videogame_asset</i>
+                        <p>One on One</p>
+                    </a>
+                </li>
+
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{url('/league')}}">
+                        <i class="material-icons">flag</i>
+                        <p>League</p>
+                    </a>
+                </li>
+
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url('/settings')}}">
+                        <i class="material-icons">help</i>
+                        <p>Help</p>
+                    </a>
+                </li>
+
+                {{--<li class="nav-item ">--}}
                 {{--<a class="nav-link" href="#">--}}
-                    {{--<i class="material-icons">location_ons</i>--}}
-                    {{--<p>Dashboard</p>--}}
+                {{--<i class="material-icons">location_ons</i>--}}
+                {{--<p> Admin Dashboard</p>--}}
                 {{--</a>--}}
-            {{--</li>--}}
+                {{--</li>--}}
 
-            {{--<li class="nav-item ">--}}
-                {{--<a class="nav-link" href="{{url('/users')}}">--}}
-                    {{--<i class="material-icons">person</i>--}}
-                    {{--<p>Users</p>--}}
-                {{--</a>--}}
-            {{--</li>--}}
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{url('/users')}}">
+                        <i class="material-icons">person</i>
+                        <p>Users</p>
+                    </a>
+                </li>
 
+             @endif
         </ul>
     </div>
 
@@ -69,7 +112,7 @@
 
 
                 <div class="navbar-wrapper">
-                    <a class="navbar-brand" href="javascript:void(0)">Settings</a>
+                    <a class="navbar-brand" href="">Help</a>
                 </div>
 
 

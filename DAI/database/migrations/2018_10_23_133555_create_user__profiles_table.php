@@ -21,6 +21,7 @@ class CreateUserProfilesTable extends Migration
             $table->text('user_image')->nullable();
             $table->integer('user_coins');
             $table->integer('user_id')->unsigned();
+            $table->string('level','20')->nullable();
             $table->index('user_id') ;
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

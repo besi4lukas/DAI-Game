@@ -2,9 +2,11 @@
 <html lang="en">
 
 <head>
+
     <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="76x76" href="{{asset('temp/assets/img/apple-icon.png')}}">
-    <link rel="icon" type="image/png" href="{{asset('temp/assets/img/favicon.png')}}">
+    <link rel="icon" t
+          ype="image/png" href="{{asset('temp/assets/img/favicon.png')}}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>
         Dead And Injured
@@ -21,7 +23,6 @@
     <script src="https://js.pusher.com/4.3/pusher.min.js"></script>
 
 
-
 </head>
 
 <body class="dark-edition">
@@ -29,6 +30,7 @@
 
         $user = \Illuminate\Support\Facades\Auth::user() ;
         $user_profile = \Illuminate\Support\Facades\DB::select('select * from user__profiles where user_id = ?',[$user->id]) ;
+        $email = \Illuminate\Support\Facades\DB::select('select email from users where id = ?',[$user->id]);
 
 ?>
     <div class="wrapper ">
@@ -60,24 +62,24 @@
                         <span class="navbar-toggler-icon icon-bar"></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-end">
-                        <form class="navbar-form">
-                            <div class="input-group no-border">
-                                <input type="text" value="" class="form-control" placeholder="Search...">
-                                <button type="submit" class="btn btn-default btn-round btn-just-icon">
-                                    <i class="material-icons">search</i>
-                                    <div class="ripple-container"></div>
-                                </button>
-                            </div>
-                        </form>
+                        {{--<form class="navbar-form">--}}
+                            {{--<div class="input-group no-border">--}}
+                                {{--<input type="text" value="" class="form-control" placeholder="Search...">--}}
+                                {{--<button type="submit" class="btn btn-default btn-round btn-just-icon">--}}
+                                    {{--<i class="material-icons">search</i>--}}
+                                    {{--<div class="ripple-container"></div>--}}
+                                {{--</button>--}}
+                            {{--</div>--}}
+                        {{--</form>--}}
                         <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{url('/home')}}">
-                                    <i class="material-icons">dashboard</i>
-                                    <p class="d-lg-none d-md-block">
-                                        Stats
-                                    </p>
-                                </a>
-                            </li>
+                            {{--<li class="nav-item">--}}
+                                {{--<a class="nav-link" href="{{url('/home')}}">--}}
+                                    {{--<i class="material-icons">dashboard</i>--}}
+                                    {{--<p class="d-lg-none d-md-block">--}}
+                                        {{--Stats--}}
+                                    {{--</p>--}}
+                                {{--</a>--}}
+                            {{--</li>--}}
                             <li class="nav-item dropdown">
 
                                 <a class="nav-link" href=""
@@ -89,6 +91,7 @@
                                         Some Actions
                                     </p>
                                 </a>
+
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                                     @forelse(auth()->user()->unreadNotifications as $notification)
                                         @include('layouts.notification.'.snake_case(class_basename($notification->type)))
@@ -101,9 +104,10 @@
                                 </div>
                             </li>
 
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown ">
                                 <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">person</i>
+                                    {{--<i class="material-icons">person</i>--}}
+                                    <img class="rounded-circle" src="https://www.gravatar.com/avatar/{{md5($email[0]->email)}}?d=robohash" height="40" width="40" >
                                     <p class="d-lg-none d-md-block">
                                         Account
                                     </p>

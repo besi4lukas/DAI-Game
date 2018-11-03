@@ -65,9 +65,10 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $user = new User();
-
+        $role = "user" ;
         $user->email = $data['email'] ;
         $user->password = Hash::make($data['password']);
+        $user->role = $role ;
 
         if($user->save()){
 
@@ -79,6 +80,7 @@ class RegisterController extends Controller
             $user_profile->user_image = null ;
             $user_profile->user_coins = 500 ;
             $user_profile->user_id = $user->id ;
+            $user_profile->level = "Beginner" ;
 
             $user_profile->save() ;
 

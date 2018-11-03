@@ -59,6 +59,24 @@ class UserController extends Controller
     }
 
     public function users(){
-        return view('dai_views.users') ;
+        if (Auth::check()) {
+
+            $users = User::all() ;
+            $profiles = array() ;
+            $count = 0 ;
+
+            foreach ($users as $user){
+
+                $user_profile = User_Profile::where('user_id',$user->id)->first() ;
+                $profiles[$count] = $user_profile ;
+                $count += 1 ;
+
+            }
+
+
+            return view('dai_views.users',compact('users','profiles'));
+        }else{
+            return redirect('/login') ;
+        }
     }
 }
