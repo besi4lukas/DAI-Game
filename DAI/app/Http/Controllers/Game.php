@@ -18,10 +18,15 @@ class Game extends Controller
 {
 
     public function index($id){
+        if (Auth::check()) {
 
-        $game_id = $id ;
+            $game_id = $id;
 
-        return view('dai_views.game', compact('game_id')) ;
+            return view('dai_views.game', compact('game_id'));
+
+        }else{
+            return redirect('/login') ;
+        }
     }
 
     public function index_player_two(Request $request){
