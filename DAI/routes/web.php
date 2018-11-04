@@ -64,6 +64,8 @@ Route::get('/settings','SettingController@index') ;
 
 Route::get('/user_league/{id}','LeagueController@user_league');
 
+Route::post('/delete_league','LeagueController@delete_league')->name('deleteLeague');
+
 Route::get('/join/{id}','LeagueController@joinLeague') ;
 
 
