@@ -116,8 +116,7 @@
     <?php
             $user = \Illuminate\Support\Facades\Auth::user();
             $coins = \Illuminate\Support\Facades\DB::select('select user_coins from user__profiles where user_id = ?',[$user->id]);
-//            $players = \Illuminate\Support\Facades\DB::select('select * from user__profiles where user_id != ?',[$user->id]) ;
-            $players = \App\User_Profile::where('user_id','!=',$user->id)->get();
+            $players = \App\User_Profile::where('user_id','!=',$user->id)->where('user_coins','>=',50)->get();
             $count = 0 ;
             ?>
     <div class="row">
@@ -131,11 +130,6 @@
                     <p class="card-category">Coins</p>
                     <h3 class="card-title">{{$coins[0]->user_coins}}</h3>
                 </div>
-                {{--<div class="card-footer">--}}
-                    {{--<div class="stats">--}}
-                        {{--<i class="material-icons">date_range</i> Last 24 Hours--}}
-                    {{--</div>--}}
-                {{--</div>--}}
             </div>
             <br>
 
@@ -173,9 +167,11 @@
                         <th>User Name</th>
                         <th>Coins</th>
                         </thead>
-                        <tbody> @foreach($players as $player)
-                        <tr>
+                        <tbody>
+                        @if($coins[0]->user_coins >= 50)
+                            @foreach($players as $player)
 
+                        <tr>
                             <td>{{$player->username}}</td>
                             <td>{{$player->user_coins}}</td>
                             {{--<td>Niger</td>--}}
@@ -183,6 +179,11 @@
                         </tr>
 
                         @endforeach
+                            @else
+                            <tr>
+                                <td>Not enough Coins</td>
+                            </tr>
+                        @endif
 
                         </tbody>
                     </table>
