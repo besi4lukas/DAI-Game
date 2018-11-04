@@ -16,16 +16,23 @@ class LeagueController extends Controller
 
         if (Auth::check()) {
             $user = Auth::user()->id;
-//            $all_leagues = League_Ranking::where('user_id','!=',$user)->get() ;
             $all_leagues = DB::select('select distinct league_id from league__rankings');
             $league_rankings = League_Ranking::where('user_id', $user)->get() ;
+            $league_admins = League_Admin::where('user_id',$user)->get();
+            $admin = array() ;
             $leagues_all = array();
             $league_all_players = array() ;
             $leagues_user = array();
             $league_players = array() ;
             $count = 0 ;
             $count_ = 0 ;
+            $_count = 0 ;
             $id_array = array() ;
+
+            foreach ($league_admins as $league_admin){
+                $admin[$_count] = $league_admin->league_id ;
+                $_count += 1 ;
+            }
 
             foreach ($league_rankings as $league_ranking){
 
@@ -48,7 +55,8 @@ class LeagueController extends Controller
                 $count_ += 1 ;
             }
 
-            return view('dai_views.league',compact('leagues_all','league_all_players','leagues_user','league_players','id_array'));
+            return view('dai_views.league',compact('leagues_all','league_all_players',
+                'leagues_user','league_players','id_array','admin'));
 
         }else{
             return redirect('/login') ;
@@ -159,6 +167,17 @@ class LeagueController extends Controller
 
         }else{
 
+            return redirect('/login') ;
+        }
+    }
+
+    public function delete_league(Request $request){
+        if (Auth::check()){
+            $league_id = $request->league_id ;
+            League::where('id',$league_id)->delete();
+
+            return back() ;
+        }else{
             return redirect('/login') ;
         }
     }

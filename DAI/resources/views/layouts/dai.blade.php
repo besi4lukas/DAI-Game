@@ -138,10 +138,10 @@
                     <div class="modal-content">
 
                         <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Game Number</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
+                        {{--<div class="modal-header">--}}
+                            {{--<h4 class="modal-title">Game Number</h4>--}}
+                            {{--<button type="button" class="close" data-dismiss="modal">&times;</button>--}}
+                        {{--</div>--}}
 
                         <!-- Modal body -->
                         <div class="modal-body dark-edition">
@@ -154,9 +154,9 @@
                         </div>
 
                         <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        </div>
+                        {{--<div class="modal-footer">--}}
+                            {{--<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>--}}
+                        {{--</div>--}}
 
                     </div>
                 </div>
@@ -171,12 +171,6 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
 
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Game Number</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-
                         <!-- Modal body -->
                         <div class="modal-body dark-edition">
                             <form method="POST" action="{{route('game')}}">
@@ -188,9 +182,9 @@
                         </div>
 
                         <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        </div>
+                        {{--<div class="modal-footer">--}}
+                            {{--<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>--}}
+                        {{--</div>--}}
 
                     </div>
                 </div>
@@ -478,15 +472,7 @@
         });
     </script>
 
-
-    {{--<script>--}}
-        {{--$(document).ready(function() {--}}
-            {{--// Javascript method's body can be found in assets/js/demos.js--}}
-            {{--md.initDashboardPageCharts();--}}
-
-        {{--});--}}
-    {{--</script>--}}
-
+@yield('after_content')
 </body>
 
 </html>

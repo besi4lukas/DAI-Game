@@ -134,12 +134,30 @@
 
                     </thead>
                     <tbody>@foreach($leagues_user as $league_user)
+                               @if(! in_array($league_user->id,$admin))
                     <tr>
                         <td>{{$league_user->league_name}}</td>
                         <td>{{$league_players[$count]}}</td>
                         <td>{{$league_user->status}}</td>
                         <td> <a href="{{url('/user_league',$league_user->id)}}" class="btn btn-info btn-round btn-sm">View</a></td>
                     </tr>
+                    @else
+                                   <tr>
+                                       <td>{{$league_user->league_name}}</td>
+                                       <td>{{$league_players[$count]}}</td>
+                                       <td>{{$league_user->status}}</td>
+                                       <td> <a href="{{url('/user_league',$league_user->id)}}" class="btn btn-info btn-round btn-sm">View</a></td>
+                                       <td><a href=""
+                                              id="delLeague"
+                                              data-toggle="modal"
+                                              data-target="#deleteLeague"
+                                              data-id="{{$league_user->id}}"
+                                              onclick="del()"
+                                              class="material-icons">delete</a></td>
+
+                                   </tr>
+                               @endif
+
                         <p hidden> {{$count += 1 }}</p>
                   @endforeach </tbody>
                 </table>
@@ -184,16 +202,9 @@
         <div class="modal-dialog">
             <div class="modal-content">
 
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Create League</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
                 <!-- Modal body -->
                 <div class="modal-body dark-edition">
                     <form method="POST" action="#">
-                        {{--<input type="hidden" id="game_id" class="form-control" name="game_id" value="">--}}
                         <input type="text" class="form-control" name="league" placeholder="Enter Name of League" required autocomplete="off">
                         <select class="form-control" id="status" name="status">
                             <option value="public" style="color:#000;">  Public</option>
@@ -204,15 +215,61 @@
                     </form>
                 </div>
 
-                <!-- Modal footer -->
-                {{--<div class="modal-footer">--}}
-                    {{--<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>--}}
-                {{--</div>--}}
 
             </div>
         </div>
     </div>
 
+<div class="modal fade" id="deleteLeague">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal body -->
+            <div class="modal-body dark-edition">
+                <form method="POST" action="{{route('deleteLeague')}}">
+                    <input type="hidden" id="league_id" name="league_id" value="">
+                    <h6>Are you sure you want to delete ?</h6>
+                    <button type="submit" class="btn btn-danger pull-right">Yes</button>
+                    <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">No</button>
+                    {{ csrf_field() }}
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>
+
+@endsection
+
+@section('after_content')
+    <script>
+
+    function del() {
+
+    $('#deleteLeague').on('show.bs.modal', function (event) { // id of the modal with event
+
+    var button = $(event.relatedTarget); // Button that triggered the modal
+
+    var id = $("#delLeague").data("id");
+
+    // Update the modal's content.
+
+    var modal = $(this);
+    console.log(id);
+    console.log(modal);
+
+    modal.find('.modal-body input#league_id').val(id);
+
+
+
+    })
+
+    }
+
+    </script>
 
 
 @endsection
