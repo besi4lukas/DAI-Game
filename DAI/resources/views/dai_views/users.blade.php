@@ -102,8 +102,22 @@
                                             <td>{{$profiles[$count]->username}}</td>
                                             <td>{{$profiles[$count]->user_coins}}</td>
                                             <td>{{$profiles[$count]->level}}</td>
-                                            <td><a href="{{url('/admin',$user->id)}}" class="material-icons">perm_identity</a></td>
-                                            <td><a href="{{url('/delete_user',$user->id)}}" class="material-icons" >delete</a></td>
+                                            <td><a
+                                                        href=""
+                                                        id="adUser"
+                                                        data-toggle="modal"
+                                                        data-target="#adminUser"
+                                                        data-id="{{ $user->id }}"
+                                                        onclick="adUser()"
+                                                        class="material-icons">perm_identity</a></td>
+                                            <td><a
+                                                        href=""
+                                                        id="delUser"
+                                                        data-toggle="modal"
+                                                        data-target="#deleteUser"
+                                                        data-id="{{$user->id}}"
+                                                        onclick="delUser()"
+                                                        class="material-icons ">delete</a></td>
 
                                         </tr>
                                         @else
@@ -135,6 +149,106 @@
 
 
         </div>
+
+    <!--Modal for delete prompt-->
+    <div class="modal fade" id="deleteUser">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body dark-edition">
+                    <form method="POST" action="{{route('delete_user')}}">
+                        <input type="hidden" id="user_id" name="user_id" value="">
+                        <h6>Are you sure you want to delete this user ?</h6>
+                        <button type="submit" class="btn btn-danger pull-right">Yes</button>
+                        <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">No</button>
+                        {{ csrf_field() }}
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Admin prompt -->
+    <div class="modal fade" id="adminUser">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body dark-edition">
+                    <form method="POST" action="{{route('make_admin')}}">
+                        <input type="hidden" id="user_id" name="user_id" value="">
+                        <h6>Are you sure you want to make this user an Admin ?</h6>
+                        <button type="submit" class="btn btn-danger pull-right">Yes</button>
+                        <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">No</button>
+                        {{ csrf_field() }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+@endsection
+
+@section('after_content')
+
+
+    <script>
+
+        function delUser() {
+
+            $('#deleteUser').on('show.bs.modal', function (event) { // id of the modal with event
+
+                var a = $(event.relatedTarget); // Button that triggered the modal
+
+                // var id = $("#delUser").data("id");
+
+                var id = a.data("id");
+
+                // Update the modal's content.
+
+                var modal = $(this);
+                console.log(id);
+                console.log(modal);
+
+                modal.find('.modal-body input#user_id').val(id);
+
+
+
+            })
+
+        }
+
+        function adUser() {
+
+            $('#adminUser').on('show.bs.modal', function (event) { // id of the modal with event
+
+                var a = $(event.relatedTarget); // Button that triggered the modal
+
+                var id = a.data("id");
+
+                // Update the modal's content.
+
+                var modal = $(this);
+                console.log(id);
+                console.log(modal);
+
+                modal.find('.modal-body input#user_id').val(id);
+
+
+
+            })
+
+        }
+
+
+    </script>
+
 
 
 

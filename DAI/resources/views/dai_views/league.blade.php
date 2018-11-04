@@ -251,9 +251,9 @@
 
     $('#deleteLeague').on('show.bs.modal', function (event) { // id of the modal with event
 
-    var button = $(event.relatedTarget); // Button that triggered the modal
+    var a = $(event.relatedTarget); // Button that triggered the modal
 
-    var id = $("#delLeague").data("id");
+    var id = a.data("id");
 
     // Update the modal's content.
 

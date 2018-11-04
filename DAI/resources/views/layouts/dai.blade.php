@@ -107,7 +107,8 @@
                             <li class="nav-item dropdown ">
                                 <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{--<i class="material-icons">person</i>--}}
-                                    <img class="rounded-circle" src="https://www.gravatar.com/avatar/{{md5($email[0]->email)}}?d=robohash" height="40" width="40" >
+                                    <img class="rounded-circle" src="https://www.gravatar.com/avatar/{{md5($email[0]->email)}}?d=robohash" height="40" width="40"
+                                    alt="Account">
                                     <p class="d-lg-none d-md-block">
                                         Account
                                     </p>

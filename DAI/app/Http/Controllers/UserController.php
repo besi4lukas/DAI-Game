@@ -80,8 +80,9 @@ class UserController extends Controller
         }
     }
 
-    public function make_admin($id){
+    public function make_admin(Request $request){
         if (Auth::check()){
+            $id = $request->user_id ;
             $user = User::where('id',$id)->first();
             $user->role = "admin" ;
             $user->save() ;
@@ -93,9 +94,9 @@ class UserController extends Controller
         }
     }
 
-    public function delete_user($id){
+    public function delete_user(Request $request){
         if (Auth::check()){
-
+            $id = $request->user_id ;
             User::where('id',$id)->delete();
 
             return back() ;
