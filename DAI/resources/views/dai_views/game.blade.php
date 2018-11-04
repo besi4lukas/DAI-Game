@@ -21,6 +21,7 @@
 
 </head>
 <body>
+    
 
 <?php
 
@@ -37,6 +38,7 @@
 
 ?>
 <div class="row">
+    
     {{--background-image: url('{{asset('temp/assets/img/bird.gif')}}');--}}
 
     <div class="col-sm-4" style="height: 100%; background-color: black;  background-repeat: no-repeat;" id="col1">
@@ -82,6 +84,8 @@
 
 
     <div class="col-sm-4" style="background-color:white; padding-top: 3%" id="col2" >
+    <a href="{{ url('/home') }}" >
+                                                Go to Dashboard</a>
         <h1 style="font-family: courier; padding-bottom: 7%"><center>{{$game_no[0]->number}}</center></h1>
         {{--<p><img src="{{asset('temp/assets/img/me.png')}}" id="coin" style=" padding-bottom: 10%"></p>--}}
         <p><h1 style="font-family: courier"><center>{{$user_profile[0]->username}}</center></h1></p>
