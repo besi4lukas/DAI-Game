@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Events\playerTurn;
 use App\Game;
+use App\User_Profile;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -96,7 +97,13 @@ class ApiController extends Controller
 
         event(new playerTurn($sender_id)) ;
 
-        return response()->json([$this->compare($guess_number,$other_number)],200);
+        $toReturn = $this->compare($guess_number,$other_number) ;
+
+        if ($toReturn[0]['dead'] == 3){
+            $this->win($sender_id, $player_id, $game_id) ;
+        }
+
+        return response()->json([$toReturn],200);
     }
 
 
@@ -128,6 +135,32 @@ class ApiController extends Controller
             'dead'=>$dead,
             'injured'=>$injured
         ]) ;
+
+    }
+
+
+
+    public function win($sender_id, $player_id, $game_id){
+
+        $game = Game::where('id',$game_id)->first();
+        $game->status = "ended";
+        $game->save();
+        
+        $winner = User_Profile::where('id',$player_id)->first();
+        $wc = $winner->user_coins;
+        $winner->user_coins = $wc + 50;
+        $winner->save();
+
+        $loser = User_Profile::where('id',$sender_id)->first();
+        $lc = $loser->user_coins;
+        $loser->user_coins = $lc - 50;
+        $loser->save();
+
+        $result = new \App\Result();
+        $result->winner_id = $player_id;
+        $result->loser_id = $sender_id;
+        $result->game_id = $game_id;
+        $result->save();
 
     }
 
