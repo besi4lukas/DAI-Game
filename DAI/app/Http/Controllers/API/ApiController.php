@@ -103,6 +103,12 @@ class ApiController extends Controller
             $this->win($sender_id, $player_id, $game_id) ;
         }
 
+        $guess_made = new \App\Guess();
+        $guess_made->guess = $guess_number;
+        $guess_made->player_id = $player_id;
+        $guess_made->game_id = $game_id;
+        $guess_made->save();
+
         return response()->json([$toReturn],200);
     }
 
@@ -133,7 +139,9 @@ class ApiController extends Controller
 
         return array([
             'dead'=>$dead,
-            'injured'=>$injured
+            'injured'=>$injured,
+            'guess'=>$guess,
+            'number'=>$number
         ]) ;
 
     }

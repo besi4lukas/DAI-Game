@@ -22,20 +22,96 @@
 </head>
 <body>
     
+<?php
+        function compare($_guess, $_number){
 
+            $number = $_number ;
+            $guess = $_guess ;
+            $dead = 0 ;
+            $injured = 0 ;
+    
+            for ( $i = 0 ; $i < strlen($number) ; $i++){
+    
+                if (strpos($guess,$number[$i]) !== false){
+    
+                    if (strcmp($number[$i],$guess[$i]) == 0){
+    
+                        $dead += 1 ;
+                    }
+                    else{
+    
+                        $injured += 1 ;
+                    }
+                }
+            }
+    
+    
+    
+            return array(
+                'dead'=>$dead,
+                'injured'=>$injured
+            ) ;
+    
+        }
+?>
 <?php
 
         $user_id = \Illuminate\Support\Facades\Auth::user()->id ;
         $user_profile = \Illuminate\Support\Facades\DB::select('select * from user__profiles where user_id = ?',[$user_id]) ;
         $player_one = \Illuminate\Support\Facades\DB::select('select player_one from games where id = ?',[$game_id]) ;
+        $player_two = \Illuminate\Support\Facades\DB::select('select player_two from games where id = ?',[$game_id]) ;
+        $other_player = null;
+        $other_number = null;
+        $other_profile = null;
+
+        $other_profile = \Illuminate\Support\Facades\DB::select('select * from user__profiles where user_id = ?',[$other_profile]) ;
 
         if ($user_id == $player_one[0]->player_one){
-
             $game_no = \Illuminate\Support\Facades\DB::select('select game_no_one as number from games where player_one = ?',[$user_id]) ;
+            $other_player = $player_one[0]->player_one;
+            $other_number = \Illuminate\Support\Facades\DB::select('select game_no_one from games where id = ?',[$game_id])->game_no_one ;
+
         }else{
             $game_no = \Illuminate\Support\Facades\DB::select('select game_no_two as number from games where player_two = ?',[$user_id]) ;
+            $other_player = $player_two[0]->player_two;
+            $other_number = \Illuminate\Support\Facades\DB::select('select game_no_two from games where id = ?',[$game_id])->game_no_two ;
+   
         }
 
+        $guesses_you = \Illuminate\Support\Facades\DB::select('select * from guesses where game_id = ? and player_id = ? order by created_at',[$game_id, $user_id]) ;
+        $guesses_other = \Illuminate\Support\Facades\DB::select('select * from guesses where game_id = ? and player_id = ? order by created_at',[$game_id, $other_player]) ;
+        $guesses_array = array();
+        $other_array = array();
+        $i = 0;
+        foreach($guesses_you as $guess){
+            $dead = compare($guess->guess,$other_number[0])['dead'];
+            $injured = compare($guess->guess,$other_number[0])['injured'];
+            $toAdd = array($guess->guess,$dead,$injured);
+            array_push($guesses_array, $toAdd);
+            $i = $i+1;
+        }
+        foreach($guesses_other as $guess){
+            $dead = compare($guess->guess, $game_no[0]->number)['dead'];
+            $injured = compare($guess->guess, $game_no[0]->number)['injured'];
+            $toAdd = array($guess->guess,$dead,$injured);
+            array_push($other_array, $toAdd);
+            $i = $i+1;
+        }
+        echo $i;
+
+?>
+<?php
+        function toTable($array){
+            $toReturn = "";
+            foreach($array as $line){
+                $toReturn = $toReturn."<tr>";
+                foreach($line as $element){
+                    $toReturn = $toReturn."<td>".$element."</td>";
+                }
+                $toReturn = $toReturn."</tr>";
+            }
+            return $toReturn;
+        }
 ?>
 <div class="row">
     
@@ -43,40 +119,19 @@
 
     <div class="col-sm-4" style="height: 100%; background-color: black;  background-repeat: no-repeat;" id="col1">
 
-        <h1 style="font-family: courier; color: white;"><center>Guessed Numbers</center></h1>
+        <h1 style="font-family: courier; color: white;"><center>YOU</center></h1>
 
 
         <table>
             <tr>
-                <th><center>player</center></th>
-                <th><center>number guessed</center></th>
+                <th><center>Number</center></th>
+                <th><center>Dead</center></th>
+                <th><center>Injured</center></th>
 
             </tr>
-            <tr>
-                <td><center>1</center></td>
-                <td><center>123</center></td>
-
-            </tr>
-            <tr>
-                <td><center>2</center></td>
-                <td><center>657</center></td>
-            </tr>
-            <tr>
-                <td><center>1</center></td>
-                <td><center>983</center></td>
-            </tr>
-            <tr>
-                <td><center>2</center></td>
-                <td><center>387</center></td>
-            </tr>
-            <tr>
-                <td><center>1</center></td>
-                <td><center>257</center></td>
-            </tr>
-            <tr>
-                <td><center>2</center></td>
-                <td><center>121</center></td>
-            </tr>
+            <?php
+                echo toTable($guesses_array);
+            ?>
         </table>
     </div>
 
@@ -107,39 +162,17 @@
 
     <div class="col-sm-4" style="height: 100%; background-color: black; background-image: url(bird.gif); background-repeat: no-repeat;" id="col3" >
 
-        <h1 style="font-family: courier; color: white;"><center>Report</center></h1>
+        <h1 style="font-family: courier; color: white;"><center>OTHER</center></h1>
 
         <table>
             <tr>
+                <th><center>guess</center></th>
                 <th><center>dead</center></th>
                 <th><center>injured</center></th>
-
             </tr>
-            <tr>
-                <td><center>1</center></td>
-                <td><center>0</center></td>
-
-            </tr>
-            <tr>
-                <td><center>1</center></td>
-                <td><center>0</center></td>
-            </tr>
-            <tr>
-                <td><center>2</center></td>
-                <td><center>1</center></td>
-            </tr>
-            <tr>
-                <td><center>0</center></td>
-                <td><center>3</center></td>
-            </tr>
-            <tr>
-                <td><center>1</center></td>
-                <td><center>2</center></td>
-            </tr>
-            <tr>
-                <td><center>0</center></td>
-                <td><center>0</center></td>
-            </tr>
+            <?php
+                echo toTable($other_array);
+            ?>
         </table>
 
     </div>
