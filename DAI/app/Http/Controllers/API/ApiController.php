@@ -154,12 +154,12 @@ class ApiController extends Controller
         $game->status = "ended";
         $game->save();
         
-        $winner = User_Profile::where('id',$player_id)->first();
+        $winner = User_Profile::where('user_id',$player_id)->first();
         $wc = $winner->user_coins;
         $winner->user_coins = $wc + 50;
         $winner->save();
 
-        $loser = User_Profile::where('id',$sender_id)->first();
+        $loser = User_Profile::where('user_id',$sender_id)->first();
         $lc = $loser->user_coins;
         $loser->user_coins = $lc - 50;
         $loser->save();

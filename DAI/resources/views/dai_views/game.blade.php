@@ -60,36 +60,43 @@
         $user_profile = \Illuminate\Support\Facades\DB::select('select * from user__profiles where user_id = ?',[$user_id]) ;
         $player_one = \Illuminate\Support\Facades\DB::select('select player_one from games where id = ?',[$game_id]) ;
         $player_two = \Illuminate\Support\Facades\DB::select('select player_two from games where id = ?',[$game_id]) ;
-        $other_player = null;
-        $other_number = null;
-        $other_profile = null;
-
-        $other_profile = \Illuminate\Support\Facades\DB::select('select * from user__profiles where user_id = ?',[$other_profile]) ;
+        $other_player = null; // the id of the opponent
+        $other_number = null; // the game number of the opponent
+        $other_profile = null; // the profile of the opponent
 
         if ($user_id == $player_one[0]->player_one){
-            $game_no = \Illuminate\Support\Facades\DB::select('select game_no_one as number from games where player_one = ?',[$user_id]) ;
-            $other_player = $player_one[0]->player_one;
-            $other_number = \Illuminate\Support\Facades\DB::select('select game_no_one from games where id = ?',[$game_id])->game_no_one ;
+            $game_no = \Illuminate\Support\Facades\DB::select('select game_no_one as number from games where player_one = ? and id = ?',[$user_id,$game_id]) ;
+            $other_player = $player_two[0]->player_two;
+            $other_n = \Illuminate\Support\Facades\DB::select('select game_no_two from games where id = ?',[$game_id]);
+            $other_number = $other_n[0]->game_no_two ;
 
         }else{
-            $game_no = \Illuminate\Support\Facades\DB::select('select game_no_two as number from games where player_two = ?',[$user_id]) ;
-            $other_player = $player_two[0]->player_two;
-            $other_number = \Illuminate\Support\Facades\DB::select('select game_no_two from games where id = ?',[$game_id])->game_no_two ;
-   
+            $game_no = \Illuminate\Support\Facades\DB::select('select game_no_two as number from games where player_two = ? and id = ?',[$user_id,$game_id]) ;
+            $other_player = $player_one[0]->player_one;
+            $other_n = \Illuminate\Support\Facades\DB::select('select game_no_one from games where id = ?',[$game_id]) ;
+            $other_number = $other_n[0]->game_no_one ;
         }
 
+        //guesses_you is the result from the database containing all the guesses made by you
         $guesses_you = \Illuminate\Support\Facades\DB::select('select * from guesses where game_id = ? and player_id = ? order by created_at',[$game_id, $user_id]) ;
+        //guesses_other is the result from the database containing all the guesses made by the opponent
         $guesses_other = \Illuminate\Support\Facades\DB::select('select * from guesses where game_id = ? and player_id = ? order by created_at',[$game_id, $other_player]) ;
+
+        $other_profile = \Illuminate\Support\Facades\DB::select('select * from user__profiles where user_id = ?',[$other_player]) ;
+
         $guesses_array = array();
         $other_array = array();
         $i = 0;
+
+
         foreach($guesses_you as $guess){
-            $dead = compare($guess->guess,$other_number[0])['dead'];
-            $injured = compare($guess->guess,$other_number[0])['injured'];
+            $dead = compare($guess->guess,$other_number)['dead'];
+            $injured = compare($guess->guess,$other_number)['injured'];
             $toAdd = array($guess->guess,$dead,$injured);
             array_push($guesses_array, $toAdd);
             $i = $i+1;
         }
+
         foreach($guesses_other as $guess){
             $dead = compare($guess->guess, $game_no[0]->number)['dead'];
             $injured = compare($guess->guess, $game_no[0]->number)['injured'];
@@ -97,7 +104,7 @@
             array_push($other_array, $toAdd);
             $i = $i+1;
         }
-        echo $i;
+//        echo $i;
 
 ?>
 <?php
@@ -162,7 +169,7 @@
 
     <div class="col-sm-4" style="height: 100%; background-color: black; background-image: url(bird.gif); background-repeat: no-repeat;" id="col3" >
 
-        <h1 style="font-family: courier; color: white;"><center>OTHER</center></h1>
+        <h1 style="font-family: courier; color: white;"><center>{{$other_profile[0]->username}}</center></h1>
 
         <table>
             <tr>

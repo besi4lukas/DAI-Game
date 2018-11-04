@@ -43,7 +43,41 @@ class HomeController extends Controller
             'played'=>$result_count
         ]) ;
 
-//        dd($data[0]['profile'][0]->username) ;
+        $user_pro = User_Profile::where('user_id',$user->id)->first();
+
+        $game_level = array('Beginner','Amateur','Professional','Expert','Master','Grand Master');
+
+        if ($user_pro->user_coins <= 950){
+            $user_pro->level = $game_level[0] ;
+            $user_pro->save() ;
+        }
+
+        if ($user_pro->user_coins >= 1000 and $user_pro->user_coins <= 1950){
+            $user_pro->level = $game_level[1] ;
+            $user_pro->save() ;
+        }
+
+        if ($user_pro->user_coins >= 2000 and $user_pro->user_coins <= 3950){
+            $user_pro->level = $game_level[2] ;
+            $user_pro->save() ;
+        }
+
+        if ($user_pro->user_coins >= 4000 and $user_pro->user_coins <= 7950){
+            $user_pro->level = $game_level[3] ;
+            $user_pro->save() ;
+        }
+
+        if ($user_pro->user_coins >= 8000 and $user_pro->user_coins <= 15950){
+            $user_pro->level = $game_level[4] ;
+            $user_pro->save() ;
+        }
+
+        if ($user_pro->user_coins >= 16000){
+            $user_pro->level = $game_level[5] ;
+            $user_pro->save() ;
+        }
+
+
         return view('dai_views.dashboard',compact('data','leaders','title'));
     }
 }

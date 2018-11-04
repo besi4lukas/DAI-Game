@@ -32,8 +32,6 @@ class UserController extends Controller
             $user = Auth::user();
             $user_profile = User_Profile::where('user_id', $user->id)->first();
 
-//        dd($request);
-
             $user_table = User::where('id', $user->id)->first();
             $image = $user_profile->user_image;
             $coins = $user_profile->user_coins;
@@ -50,6 +48,8 @@ class UserController extends Controller
             if ($user_table->save()) {
 
                 $user_profile->save();
+
+                $alert_status = true ;
             }
 
             return $this->index();
