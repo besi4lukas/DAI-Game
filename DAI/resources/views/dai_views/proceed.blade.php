@@ -7,19 +7,10 @@
     <nav class="navbar navbar-expand-lg navbar-transparent" id="navigation-example">
         <div class="container-fluid">
             <div class="navbar-wrapper">
-                <a class="navbar-brand" href="{{url('/home')}}">Dashboard</a>
+                <a class="navbar-brand" href="" data-toggle="modal" data-target="#Modal"
+                >Exit to Dashboard</a>
             </div>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="navbar-toggler-icon icon-bar"></span>
-                <span class="navbar-toggler-icon icon-bar"></span>
-                <span class="navbar-toggler-icon icon-bar"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end">
-                <ul class="navbar-nav">
 
-                </ul>
-            </div>
         </div>
     </nav>
 
@@ -64,9 +55,12 @@
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('Proceed to Game Board') }}
                                     </button>
+
                                 </div>
                             </div>
+
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -75,9 +69,28 @@
     </div>
 
 
-
-
-
+    <!-- Modal -->
+    <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">If you exit your opponent wins the game  </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6>Are you sure you want to exit ?</h6>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> No </button>
+                    <a type="button" class="btn btn-warning" href="{{url('/exit', $game_id)}}">Quit Game</a>
+                </div>
+                {{--<div class="modal-footer">--}}
+                    {{--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--}}
+                    {{--<button type="button" class="btn btn-primary">Save changes</button>--}}
+                {{--</div>--}}
+            </div>
+        </div>
+    </div>
 
 
 

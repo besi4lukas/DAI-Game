@@ -7,6 +7,7 @@ use App\Notifications\AcceptRequest;
 use App\Notifications\AcceptRequestTwo;
 use App\Notifications\DeclineRequest;
 use App\Notifications\Requests;
+use App\Result;
 use App\User;
 use App\User_Profile;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ use App\Events\newRequest ;
 class Game extends Controller
 {
 
+    //function returns a game board page
     public function index($id){
 
         if (Auth::check()) {
@@ -30,30 +32,83 @@ class Game extends Controller
         }
     }
 
+    public function exit($id){
+        if (Auth::check()){
+            $user_id = Auth::user()->id ;
+            $game_id = $id ;
+            $other_player = null ;
+
+            $game = \App\Game::where('id',$game_id)->first() ;
+
+            if ($game->player_one == $user_id){
+
+                $other_player = $game->player_two ;
+            }
+            else{
+                $other_player = $game->player_one ;
+            }
+
+            $game->status = "ended" ;
+            $game->save() ;
+
+            $result = new Result() ;
+            $result->winner_id = $other_player ;
+            $result->loser_id = $user_id ;
+            $result->game_id = $game_id ;
+            $result->save() ;
+
+            $my_profile = User_Profile::where('user_id',$user_id)->first();
+            $my_coins = $my_profile->user_coins ;
+            $my_profile->user_coins = $my_coins - 50 ;
+            $my_profile->save() ;
+
+            $other_profile = User_Profile::where('user_id',$other_player)->first();
+            $other_coins = $other_profile->user_coins ;
+            $other_profile->user_coins = $other_coins + 50 ;
+            $other_profile->save() ;
+
+
+            return redirect('/home') ;
+
+        }
+        else{
+            return redirect('/login') ;
+        }
+    }
+
+    //handles the post data for the proceed page and redirects to game board
     public function game_board(Request $request){
 
         if (Auth::check()){
 
             $game_id = $request->game_id ;
             $game = \App\Game::where('id',$game_id)->first() ;
-            $user_id = Auth::id() ;
 
-            if ($user_id == $game->player_one){
-                $game->game_no_one = $request->number ;
-                $game->save() ;
-            }
-            else{
-                $game->game_no_two = $request->number ;
-                $game->save() ;
-            }
+            if ((!$game->game_no_one == null) and (!$game->game_no_two == null)){
 
-            return redirect()->route('start',['id' => $game_id]) ;
+                return redirect()->route('start',['id' => $game_id]);
+            }
+            else {
+
+                $user_id = Auth::id();
+
+                if ($user_id == $game->player_one) {
+                    $game->game_no_one = $request->number;
+                    $game->save();
+                } else {
+                    $game->game_no_two = $request->number;
+                    $game->save();
+                }
+
+                return redirect()->route('start', ['id' => $game_id]);
+            }
         }
         else{
             return redirect('/login');
         }
     }
 
+    //function returns the proceed page
     public function proceed($id){
 
         if (Auth::check()){
@@ -68,6 +123,7 @@ class Game extends Controller
 
     }
 
+    //creates a new game, notifies player one and redirects to proceed page
     public function index_player_two($id){
 
         if (Auth::check()) {
@@ -98,6 +154,7 @@ class Game extends Controller
         }
     }
 
+    //redirects player one to the proceed page
     public function index_player_one($id){
 
         if (Auth::check()) {
@@ -113,6 +170,7 @@ class Game extends Controller
         }
     }
 
+    //returns the one on one page
     public function one_on_one(){
 
         if (Auth::check()) {
@@ -145,7 +203,7 @@ class Game extends Controller
     }
 
 
-
+    //sends a battle request to a player
     public function battleRequest($id){
 
         if (Auth::check()) {
@@ -158,7 +216,7 @@ class Game extends Controller
 
             event(new newRequest(intval($id)));
 
-            return $this->one_on_one();
+            return back();
 
         }else{
             return redirect('/login') ;

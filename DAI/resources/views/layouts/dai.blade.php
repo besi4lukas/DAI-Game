@@ -35,7 +35,7 @@
 ?>
 
     <div class="wrapper ">
-        <div class="sidebar" data-color="purple" data-background-color="black" data-image="{{asset('temp/assets/img/fire4.gif')}}">
+        <div class="sidebar" data-color="purple" data-background-color="black" data-image="{{asset('temp/assets/img/dead.png')}}">
 
             <div class="logo">
                 <a href="{{url('/user_profile')}}" class="simple-text logo-normal">

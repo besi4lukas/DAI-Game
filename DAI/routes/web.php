@@ -38,6 +38,7 @@ Route::get('/one_on_one','Game@one_on_one');
 
 Route::get('/battle/{id}','Game@battleRequest') ;
 
+Route::get('/exit/{id}','Game@exit');
 
 Route::get('/markAsRead', function (){
     $_user = \Illuminate\Support\Facades\Auth::user();

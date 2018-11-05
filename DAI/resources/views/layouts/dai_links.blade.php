@@ -38,7 +38,21 @@
 
     </div>
 
+    <script src="{{asset('temp/assets/js/core/jquery.min.js')}}"></script>
+    <script src="{{asset('temp/assets/js/core/popper.min.js')}}"></script>
+    <script src="{{asset('temp/assets/js/core/bootstrap-material-design.min.js')}}"></script>
+    <script src="https://unpkg.com/default-passive-events"></script>
+    <script src="{{asset('temp/assets/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script>
+    <script src="{{asset('js/main.js')}}"> </script>
 
+    <!-- Chartist JS -->
+    <script src="{{asset('temp/assets/js/plugins/chartist.min.js')}}"></script>
+
+    <!--  Notifications Plugin    -->
+    <script src="{{asset('temp/assets/js/plugins/bootstrap-notify.js')}}"></script>
+
+    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="{{asset('temp/assets/js/material-dashboard.js?v=2.1.0')}}"></script>
 
 </body>
 
