@@ -18,6 +18,7 @@ class Game extends Controller
 {
 
     public function index($id){
+
         if (Auth::check()) {
 
             $game_id = $id;
@@ -29,52 +30,86 @@ class Game extends Controller
         }
     }
 
-    public function index_player_two(Request $request){
+    public function game_board(Request $request){
+
+        if (Auth::check()){
+
+            $game_id = $request->game_id ;
+            $game = \App\Game::where('id',$game_id)->first() ;
+            $user_id = Auth::id() ;
+
+            if ($user_id == $game->player_one){
+                $game->game_no_one = $request->number ;
+                $game->save() ;
+            }
+            else{
+                $game->game_no_two = $request->number ;
+                $game->save() ;
+            }
+
+            return redirect()->route('start',['id' => $game_id]) ;
+        }
+        else{
+            return redirect('/login');
+        }
+    }
+
+    public function proceed($id){
+
+        if (Auth::check()){
+
+            $game_id = $id ;
+
+            return view('dai_views.proceed',compact('game_id')) ;
+
+        }else{
+            return redirect('/login') ;
+        }
+
+    }
+
+    public function index_player_two($id){
 
         if (Auth::check()) {
+
             $game = new \App\Game();
             $status = "pending";
-
             $user_id = Auth::user()->id;
-            $id = $request->player_one;
             $game->player_two = $user_id;
             $game->player_one = $id;
-            $game->game_no_two = $request->number;
+            $game->game_no_two = null ;
             $game->player_turn = 1;
             $game->status = $status;
             $game->save();
 
-            $pending_game = DB::select('select * from games where player_one = ? and player_two = ? and status = ?', [$request->player_one, $user_id, $status]);
+            $pending_game = DB::select('select * from games where player_one = ? and player_two = ? and status = ?', [$id, $user_id, $status]);
             $game_id = $pending_game[0]->id;
-            $player_one = User::where('id', intval($id))->first();
+            $player_one = User::where('id', $id)->first();
             $player_one->notify(new AcceptRequest($user_id, $game_id));
             event(new newRequest($id)) ;
 
-            return redirect()->route('newGame', ['id' => $game_id]);
+            $_user = Auth::user();
+            $_user->unreadNotifications->markAsRead() ;
+
+            return $this->proceed($game_id);
 
         }else{
             return redirect('/login') ;
         }
     }
 
-    public function index_player_one(Request $request){
+    public function index_player_one($id){
 
         if (Auth::check()) {
 
-            $status = "active";
-            $status_pending = "pending";
-            $pending_game = \App\Game::where('id', $request->game_id)->where('status', $status_pending)->first();
+            $game_id = $id ;
 
-            $pending_game->game_no_one = $request->number;
-            $pending_game->status = $status;
+            return $this->proceed($game_id);
 
-            $pending_game->save();
-
-            $game_id = $request->game_id;
-
-            return redirect()->route('newGame', ['id' => $game_id]);
         }else{
+
             return redirect('/login') ;
+
         }
     }
 

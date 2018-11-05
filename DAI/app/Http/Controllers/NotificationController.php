@@ -37,6 +37,9 @@ class NotificationController extends Controller
 
         event(new newRequest($id)) ;
 
+        $_user = Auth::user();
+        $_user->unreadNotifications->markAsRead() ;
+
         return back();
     }
 }

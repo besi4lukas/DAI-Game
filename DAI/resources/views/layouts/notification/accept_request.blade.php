@@ -1,8 +1,4 @@
 <p class="dropdown-item">
     {{$notification->data['sender'][0]['username']}} accepted your game request &nbsp
-    <button class="btn btn-primary btn-sm"  data-toggle="modal"
-            data-target="#myModalOne"
-            data-id="{{$notification->data['game']}}"
-            onclick="add_game_id()"> Launch game </button>
+    <a  href="{{url('/game_one',$notification->data['game'])}}" class="btn btn-primary btn-sm"> Launch game </a>
 </p>
-

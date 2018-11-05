@@ -33,6 +33,7 @@
         $email = \Illuminate\Support\Facades\DB::select('select email from users where id = ?',[$user->id]);
 
 ?>
+
     <div class="wrapper ">
         <div class="sidebar" data-color="purple" data-background-color="black" data-image="{{asset('temp/assets/img/fire4.gif')}}">
 
@@ -41,16 +42,12 @@
                     {{$user_profile[0]->username}}
                 </a>
             </div>
-
                @yield('before_content')
-
-
-
         </div>
 
         <div class="main-panel">
             <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-transparent " id="navigation-example">
+            <nav class="navbar navbar-expand-lg navbar-transparent" id="navigation-example">
                 <div class="container-fluid">
 
                     @yield('navbar')
@@ -132,66 +129,8 @@
 
 
 
-
-            <!-- The Modal player one-->
-            <div class="modal fade" id="myModalOne">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-
-                        <!-- Modal Header -->
-                        {{--<div class="modal-header">--}}
-                            {{--<h4 class="modal-title">Game Number</h4>--}}
-                            {{--<button type="button" class="close" data-dismiss="modal">&times;</button>--}}
-                        {{--</div>--}}
-
-                        <!-- Modal body -->
-                        <div class="modal-body dark-edition">
-                            <form method="POST" action="{{route('gameLaunch')}}">
-                                <input type="hidden" id="game_id" class="form-control" name="game_id" value="">
-                                <input type="text" class="form-control" name="number" placeholder="enter game number" required autocomplete="off">
-                                <button type="submit" class="btn btn-primary pull-right">Confirm</button>
-                                {{ csrf_field() }}
-                            </form>
-                        </div>
-
-                        <!-- Modal footer -->
-                        {{--<div class="modal-footer">--}}
-                            {{--<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>--}}
-                        {{--</div>--}}
-
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
-            <!-- The Modal player two-->
-            <div class="modal fade" id="myModalTwo">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-
-                        <!-- Modal body -->
-                        <div class="modal-body dark-edition">
-                            <form method="POST" action="{{route('game')}}">
-                                <input type="hidden" id="player_one" name="player_one" value="">
-                                <input type="text" class="form-control" name="number" placeholder="enter game number" required autocomplete="off">
-                                <button type="submit" class="btn btn-primary pull-right">Confirm</button>
-                                {{ csrf_field() }}
-                            </form>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-
-
             <div class="container-fluid">
-
             @yield('content')
-
             </div>
 
         </div>
@@ -200,16 +139,84 @@
     </div>
 
 
+    <!-- The Modal player one-->
+    {{--<div class="modal fade" id="myModalOne">--}}
+    {{--<div class="modal-dialog">--}}
+        {{--<div class="modal-content">--}}
+
+            {{--<!-- Modal Header -->--}}
+            {{--<div class="modal-header">--}}
+                {{--<h4 class="modal-title">Game Number</h4>--}}
+                {{--<button type="button" class="close" data-dismiss="modal">&times;</button>--}}
+            {{--</div>--}}
+
+            {{--<!-- Modal body -->--}}
+            {{--<div class="modal-body dark-edition">--}}
+                {{--<form method="POST" action="{{route('gameLaunch')}}">--}}
+                    {{--<input type="hidden" id="game_id" class="form-control" name="game_id" value="">--}}
+                    {{--<input type="text" class="form-control" name="number"--}}
+                           {{--placeholder="enter game number"--}}
+                           {{--pattern="[0-9]{3}"--}}
+                           {{--required autocomplete="off">--}}
+                    {{--<button type="submit" class="btn btn-primary pull-right">Confirm</button>--}}
+                    {{--{{ csrf_field() }}--}}
+                {{--</form>--}}
+            {{--</div>--}}
+
+            {{--<!-- Modal footer -->--}}
+            {{--<div class="modal-footer">--}}
+                {{--<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>--}}
+            {{--</div>--}}
+
+        {{--</div>--}}
+    {{--</div>--}}
+{{--</div>--}}
+
+
+    <!-- The Modal player two-->
+    {{--<div class="modal fade" id="myModalTwo">--}}
+    {{--<div class="modal-dialog">--}}
+        {{--<div class="modal-content">--}}
+
+            {{--<div class="modal-header">--}}
+                {{--<h4 class="modal-title">Game Number</h4>--}}
+                {{--<button type="button" class="close" data-dismiss="modal">&times;</button>--}}
+            {{--</div>--}}
+
+            {{--<!-- Modal body -->--}}
+            {{--<div class="modal-body dark-edition">--}}
+                {{--<form method="POST" action="{{route('game')}}">--}}
+                    {{--<input type="hidden" id="player_one" name="player_one" value="">--}}
+                    {{--<input type="text" class="form-control" name="number"--}}
+                           {{--placeholder="enter game number"--}}
+                           {{--pattern="[0-9]{3}"--}}
+                           {{--required autocomplete="off">--}}
+                    {{--<button type="submit" class="btn btn-primary pull-right">Confirm</button>--}}
+                    {{--{{ csrf_field() }}--}}
+                {{--</form>--}}
+            {{--</div>--}}
+
+            {{--<div class="modal-footer">--}}
+                {{--<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>--}}
+            {{--</div>--}}
+
+        {{--</div>--}}
+    {{--</div>--}}
+{{--</div>--}}
+
+
+
+
+
     <!--   Core JS Files   -->
+
+
     <script src="{{asset('temp/assets/js/core/jquery.min.js')}}"></script>
     <script src="{{asset('temp/assets/js/core/popper.min.js')}}"></script>
     <script src="{{asset('temp/assets/js/core/bootstrap-material-design.min.js')}}"></script>
     <script src="https://unpkg.com/default-passive-events"></script>
     <script src="{{asset('temp/assets/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script>
     <script src="{{asset('js/main.js')}}"> </script>
-
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
 
     <!-- Chartist JS -->
     <script src="{{asset('temp/assets/js/plugins/chartist.min.js')}}"></script>
@@ -260,215 +267,8 @@
     </script>
 
 
-    <script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
 
-    function add(){
-        $('#myModalTwo').on('show.bs.modal', function (event) { // id of the modal with event
-
-            var button = $(event.relatedTarget); // Button that triggered the modal
-
-            var id = button.data('id');
-
-            // Update the modal's content.
-
-            var modal = $(this);
-            console.log(id);
-            console.log(modal);
-
-            modal.find('.modal-body input#player_one').val(id);
-
-
-
-        })
-    }
-
-    function add_game_id(){
-        $('#myModalOne').on('show.bs.modal', function (event) { // id of the modal with event
-
-            var button = $(event.relatedTarget); // Button that triggered the modal
-
-            var id = button.data('id');
-
-            // Update the modal's content.
-
-            var modal = $(this);
-            console.log(id);
-            console.log(modal);
-
-            modal.find('.modal-body input#game_id').val(id);
-
-
-
-        })
-    }
-
-</script>
-
-
-    <script>
-        $(document).ready(function() {
-            $().ready(function() {
-                $sidebar = $('.sidebar');
-
-                $sidebar_img_container = $sidebar.find('.sidebar-background');
-
-                $full_page = $('.full-page');
-
-                $sidebar_responsive = $('body > .navbar-collapse');
-
-                window_width = $(window).width();
-
-                $('.fixed-plugin a').click(function(event) {
-                    // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
-                    if ($(this).hasClass('switch-trigger')) {
-                        if (event.stopPropagation) {
-                            event.stopPropagation();
-                        } else if (window.event) {
-                            window.event.cancelBubble = true;
-                        }
-                    }
-                });
-
-                $('.fixed-plugin .active-color span').click(function() {
-                    $full_page_background = $('.full-page-background');
-
-                    $(this).siblings().removeClass('active');
-                    $(this).addClass('active');
-
-                    var new_color = $(this).data('color');
-
-                    if ($sidebar.length != 0) {
-                        $sidebar.attr('data-color', new_color);
-                    }
-
-                    if ($full_page.length != 0) {
-                        $full_page.attr('filter-color', new_color);
-                    }
-
-                    if ($sidebar_responsive.length != 0) {
-                        $sidebar_responsive.attr('data-color', new_color);
-                    }
-                });
-
-                $('.fixed-plugin .background-color .badge').click(function() {
-                    $(this).siblings().removeClass('active');
-                    $(this).addClass('active');
-
-                    var new_color = $(this).data('background-color');
-
-                    if ($sidebar.length != 0) {
-                        $sidebar.attr('data-background-color', new_color);
-                    }
-                });
-
-                $('.fixed-plugin .img-holder').click(function() {
-                    $full_page_background = $('.full-page-background');
-
-                    $(this).parent('li').siblings().removeClass('active');
-                    $(this).parent('li').addClass('active');
-
-
-                    var new_image = $(this).find("img").attr('src');
-
-                    if ($sidebar_img_container.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
-                        $sidebar_img_container.fadeOut('fast', function() {
-                            $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
-                            $sidebar_img_container.fadeIn('fast');
-                        });
-                    }
-
-                    if ($full_page_background.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
-                        var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
-
-                        $full_page_background.fadeOut('fast', function() {
-                            $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
-                            $full_page_background.fadeIn('fast');
-                        });
-                    }
-
-                    if ($('.switch-sidebar-image input:checked').length == 0) {
-                        var new_image = $('.fixed-plugin li.active .img-holder').find("img").attr('src');
-                        var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
-
-                        $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
-                        $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
-                    }
-
-                    if ($sidebar_responsive.length != 0) {
-                        $sidebar_responsive.css('background-image', 'url("' + new_image + '")');
-                    }
-                });
-
-                $('.switch-sidebar-image input').change(function() {
-                    $full_page_background = $('.full-page-background');
-
-                    $input = $(this);
-
-                    if ($input.is(':checked')) {
-                        if ($sidebar_img_container.length != 0) {
-                            $sidebar_img_container.fadeIn('fast');
-                            $sidebar.attr('data-image', '#');
-                        }
-
-                        if ($full_page_background.length != 0) {
-                            $full_page_background.fadeIn('fast');
-                            $full_page.attr('data-image', '#');
-                        }
-
-                        background_image = true;
-                    } else {
-                        if ($sidebar_img_container.length != 0) {
-                            $sidebar.removeAttr('data-image');
-                            $sidebar_img_container.fadeOut('fast');
-                        }
-
-                        if ($full_page_background.length != 0) {
-                            $full_page.removeAttr('data-image', '#');
-                            $full_page_background.fadeOut('fast');
-                        }
-
-                        background_image = false;
-                    }
-                });
-
-                $('.switch-sidebar-mini input').change(function() {
-                    $body = $('body');
-
-                    $input = $(this);
-
-                    if (md.misc.sidebar_mini_active == true) {
-                        $('body').removeClass('sidebar-mini');
-                        md.misc.sidebar_mini_active = false;
-
-                        $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
-
-                    } else {
-
-                        $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('destroy');
-
-                        setTimeout(function() {
-                            $('body').addClass('sidebar-mini');
-
-                            md.misc.sidebar_mini_active = true;
-                        }, 300);
-                    }
-
-                    // we simulate the window Resize so the charts will get updated in realtime.
-                    var simulateWindowResize = setInterval(function() {
-                        window.dispatchEvent(new Event('resize'));
-                    }, 180);
-
-                    // we stop the simulation of Window Resize after the animations are completed
-                    setTimeout(function() {
-                        clearInterval(simulateWindowResize);
-                    }, 1000);
-
-                });
-            });
-        });
-    </script>
-
-@yield('after_content')
 </body>
 
 </html>
