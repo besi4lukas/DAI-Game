@@ -5,7 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="{{asset('temp/assets/img/dead.png')}}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS Files -->
+    <link href="{{asset('temp/assets/css/material-dashboard.css?v=2.1.0')}}" rel="stylesheet" />
+    {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">--}}
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -20,8 +24,9 @@
 
 
 </head>
-<body>
-    
+<body class="dark-edition">
+
+
 <?php
         function compare($_guess, $_number){
 
@@ -57,24 +62,27 @@
 <?php
 
         $user_id = \Illuminate\Support\Facades\Auth::user()->id ;
+        $user_model = \App\User::where('id',$user_id)->first();
         $user_profile = \Illuminate\Support\Facades\DB::select('select * from user__profiles where user_id = ?',[$user_id]) ;
         $player_one = \Illuminate\Support\Facades\DB::select('select player_one from games where id = ?',[$game_id]) ;
         $player_two = \Illuminate\Support\Facades\DB::select('select player_two from games where id = ?',[$game_id]) ;
         $other_player = null; // the id of the opponent
         $other_number = null; // the game number of the opponent
         $other_profile = null; // the profile of the opponent
+        $status = null;
 
         if ($user_id == $player_one[0]->player_one){
             $game_no = \Illuminate\Support\Facades\DB::select('select game_no_one as number from games where player_one = ? and id = ?',[$user_id,$game_id]) ;
             $other_player = $player_two[0]->player_two;
             $other_n = \Illuminate\Support\Facades\DB::select('select game_no_two from games where id = ?',[$game_id]);
             $other_number = $other_n[0]->game_no_two ;
-
+            $status = 1;
         }else{
             $game_no = \Illuminate\Support\Facades\DB::select('select game_no_two as number from games where player_two = ? and id = ?',[$user_id,$game_id]) ;
             $other_player = $player_one[0]->player_one;
             $other_n = \Illuminate\Support\Facades\DB::select('select game_no_one from games where id = ?',[$game_id]) ;
             $other_number = $other_n[0]->game_no_one ;
+            $status = 2;
         }
 
         //guesses_you is the result from the database containing all the guesses made by you
@@ -120,16 +128,78 @@
             return $toReturn;
         }
 ?>
+<?php
+    $tolo = \Illuminate\Support\Facades\DB::select('select player_turn from games where id = ?',[$game_id]) ; /// what is the current turn (1 or 2)
+    $turn = $tolo[0]->player_turn;
+    $ongn = \Illuminate\Support\Facades\DB::select('select status from games where id = ?',[$game_id]) ;
+    $ongm = $ongn[0]->status ;
+    $win = false;
+
+    if (strcmp($ongm, 'ended') == 0) {
+        $ongoing =  false;
+//        $loa = \Illuminate\Support\Facades\DB::select('select winner_id from results where game_id = ?',[$game_id]) ;
+        $loa = \App\Result::where('game_id',$game_id)->first();
+        $lon = $loa->winner_id;
+        if ($lon == $user_id){
+            $win = true; /// whether you won or not
+        }
+    } else {
+        $ongoing =  true;
+    } /// whether the game is still ongoing or has ended
+
+   // dd($turn);
+    if ($ongoing) {
+        if ($turn == $status){
+            $button_status = "active";
+        } else {
+            $button_status = "inactive_waiting";
+        }
+    } else {
+        if ($win) {
+            $button_status = "inactive_winner";
+        } else {
+            $button_status = "inactive_loser";
+        }
+    }
+    //dd($button_status);
+?>
+<?php
+    function return_button($b_status){
+        $toReturn = '';
+        if (strcmp($b_status, 'active') == 0 ){
+            $toReturn = "<button ONCLICK='posting()' id='coin' class='btn btn-primary'>Guess</button>";
+        } elseif (strcmp($b_status, "inactive_waiting") == 0 ){
+            $toReturn = "<div ><center><h2>Waiting for the other player</h2></center></div>";
+        } elseif (strcmp($b_status, "inactive_winner") == 0 ) {
+            $toReturn = "<div ><center><h2>You Won</h2></center></div>";
+        } elseif (strcmp($b_status, "inactive_loser") == 0 ) {
+            $toReturn = "<div ><center><h2>You suck fucking Loser</h2></center></div>";
+        }
+
+        return $toReturn;
+    }
+
+    function exit_button($game_stat,$game_id){
+        $exitButton = '' ;
+        if (strcmp($game_stat, 'active') == 0 ){
+            $exitButton = "<a href='exit/$game_id' class='btn btn-warning offset-2'> Give up Game</a>" ;
+        }
+        return $exitButton ;
+
+    }
+?>
+
+<div class="container-fluid">
 <div class="row">
-    
-    {{--background-image: url('{{asset('temp/assets/img/bird.gif')}}');--}}
 
-    <div class="col-sm-4" style="height: 100%; background-color: black;  background-repeat: no-repeat;" id="col1">
+    <div class="col-sm-4"
+         style=" background-color: #3a4563;"
+          id="col1">
 
-        <h1 style="font-family: courier; color: white;"><center>YOU</center></h1>
+        <h3 style="font-family: courier; color: white;"><center>YOU</center></h3>
 
 
-        <table>
+        <table style="overflow: auto; padding-top: 2%;" class="table table-striped">
             <tr>
                 <th><center>Number</center></th>
                 <th><center>Dead</center></th>
@@ -145,15 +215,28 @@
 
 
 
-    <div class="col-sm-4" style="background-color:white; padding-top: 3%" id="col2" >
-    <a href="{{ url('/home') }}" >
-                                                Go to Dashboard</a>
+    <div class="col-sm-4"
+         {{--style="background-color:white; padding-top: 3%" --}}
+         id="col2" >
+
+
+        <a href="{{ url('/home') }}" class="btn btn-primary offset-1"> Go to Dashboard</a>
+
+        <?php
+            echo exit_button($ongm,$game_id) ;
+        ?>
+
+        <div>
+            <br>
+        </div>
+
+
         <h1 style="font-family: courier; padding-bottom: 7%"><center>{{$game_no[0]->number}}</center></h1>
-        {{--<p><img src="{{asset('temp/assets/img/me.png')}}" id="coin" style=" padding-bottom: 10%"></p>--}}
-        <p><h1 style="font-family: courier"><center>{{$user_profile[0]->username}}</center></h1></p>
+        <p><center><img src="https://www.gravatar.com/avatar/{{md5($user_model->email)}}?d=robohash" class="rounded-circle" style=" padding-bottom: 10%"></center></p>
+        <p><h2 style="font-family: courier"><center>{{$user_profile[0]->username}}</center></h2></p>
 
 
-        <p style="margin-top: 13%">
+        <p style="margin-top: 13%;" id="ins";>
             <input id="idnumber" type="hidden" value="{{$user_id}}" >
             <input id="game_id" type="hidden" value="{{$game_id}}" >
             <input id="number1" type="text" style="width: 32%;" onkeypress="return isNumberKey(event)" autofocus maxlength="1"/>
@@ -161,17 +244,23 @@
             <input id="number3" type="text" style="width: 32%;" onkeypress="return isNumberKey(event)"autofocus maxlength="1" />
         </p>
 
-        <button ONCLICK="posting()" id="coin" class="button">send</button>
+        {{--<button ONCLICK="posting()" id="coin" class="btn btn-primary">send</button>--}}
+        <?php
+            echo return_button($button_status);
+        ?>
+
 
     </div>
 
 
 
-    <div class="col-sm-4" style="height: 100%; background-color: black; background-image: url(bird.gif); background-repeat: no-repeat;" id="col3" >
+    <div class="col-sm-4"
+         style=" background-color: #3a4563; "
+         id="col3" >
 
-        <h1 style="font-family: courier; color: white;"><center>{{$other_profile[0]->username}}</center></h1>
+        <h3 style="font-family: courier; color: white;"><center>{{$other_profile[0]->username}}</center></h3>
 
-        <table>
+        <table style="overflow: auto; padding-top: 2%;" class="table table-striped">
             <tr>
                 <th><center>guess</center></th>
                 <th><center>dead</center></th>
@@ -185,6 +274,8 @@
     </div>
 
 </div>
+</div>
+
 
 <script>
 
@@ -202,7 +293,21 @@
 
 </script>
 
+{{--<script src="{{asset('temp/assets/js/core/jquery.min.js')}}"></script>--}}
+{{--<script src="{{asset('temp/assets/js/core/popper.min.js')}}"></script>--}}
+{{--<script src="{{asset('temp/assets/js/core/bootstrap-material-design.min.js')}}"></script>--}}
+{{--<script src="https://unpkg.com/default-passive-events"></script>--}}
+{{--<script src="{{asset('temp/assets/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script>--}}
+{{--<script src="{{asset('js/main.js')}}"> </script>--}}
 
+{{--<!-- Chartist JS -->--}}
+{{--<script src="{{asset('temp/assets/js/plugins/chartist.min.js')}}"></script>--}}
+
+{{--<!--  Notifications Plugin    -->--}}
+{{--<script src="{{asset('temp/assets/js/plugins/bootstrap-notify.js')}}"></script>--}}
+
+{{--<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->--}}
+{{--<script src="{{asset('temp/assets/js/material-dashboard.js?v=2.1.0')}}"></script>--}}
 
 <script type="text/javascript" src="{{asset('temp/assets/js/dead.js')}}"></script>
 {{--<script src="{{asset('./node_modules/axios/dist/axios.js')}}"></script>--}}

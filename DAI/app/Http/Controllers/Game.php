@@ -29,6 +29,7 @@ class Game extends Controller
 
         }else{
             return redirect('/login') ;
+
         }
     }
 
@@ -82,6 +83,7 @@ class Game extends Controller
         if (Auth::check()){
 
             $game_id = $request->game_id ;
+
             $game = \App\Game::where('id',$game_id)->first() ;
 
             if ((!$game->game_no_one == null) and (!$game->game_no_two == null)){
@@ -142,12 +144,11 @@ class Game extends Controller
             $game_id = $pending_game[0]->id;
             $player_one = User::where('id', $id)->first();
             $player_one->notify(new AcceptRequest($user_id, $game_id));
-            event(new newRequest($id)) ;
 
-            $_user = Auth::user();
-            $_user->unreadNotifications->markAsRead() ;
+//            event(new newRequest($id)) ;
 
-            return $this->proceed($game_id);
+
+            return redirect()->route('proceed',['id'=>$game_id]);
 
         }else{
             return redirect('/login') ;
@@ -161,7 +162,11 @@ class Game extends Controller
 
             $game_id = $id ;
 
-            return $this->proceed($game_id);
+            $game = \App\Game::where('id',$game_id)->first() ;
+            $game->status = "active" ;
+            $game->save() ;
+
+            return redirect()->route('proceed',['id'=>$game_id]);
 
         }else{
 

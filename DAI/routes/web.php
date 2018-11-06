@@ -15,7 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -28,7 +27,7 @@ Route::get('/game_two/{id}','Game@index_player_two');
 
 Route::get('/game/{id}','Game@index')->name('start') ;
 
-Route::get('/proceed','Game@proceed')->name('proceed') ;
+Route::get('/proceed/{id}','Game@proceed')->name('proceed') ;
 
 Route::post('/proceed','Game@game_board')->name('game_board');
 

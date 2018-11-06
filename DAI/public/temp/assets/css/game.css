@@ -4,24 +4,23 @@
     margin-right: auto;
 }
 
-span,
-input {
-	
-	border:2px solid rgba(255,255,255,.5);
-	font-size:1.75em;
-	padding:.25em .5em .3125em;
-	color:rgba(255,255,255,.5);
-	border-radius:.25em;
+span, input {
+
+	border: 2px solid rgba(255, 255, 255, .5);
+	font-size: 1.75em;
+	padding: .25em .5em .3125em;
+	color: rgba(255, 255, 255, .5);
+	border-radius: .25em;
 	/*background:transparent;*/
 	background-color: black;
-	transition:all .100s;
-	
+	transition: all .100s ;
+
 	&:focus{
 		outline:none;
 		color:rgba(255,255,255,.75);
 		border-color:rgba(255,255,255,.75);
 	}
-	
+
 	&.keyup {
 		color:white;
 		border-color:white;
@@ -75,7 +74,7 @@ input:focus:-ms-input-placeholder {
 
 html,body {
 	height:100%;
-	overflow:hidden;
+
 }
 
 html {
@@ -128,8 +127,6 @@ table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
-    margin-top: 50%;
-    margin-bottom: 50%;
 }
 
 td, th {
@@ -144,4 +141,14 @@ tr:nth-child(even) {
 }
 tr:nth-child(odd){
 	background-color: white;
+}
+
+#ins{
+	list-style: none;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	white-space: nowrap;
+	overflow-x: auto;
+	overflow-y: hidden;
 }

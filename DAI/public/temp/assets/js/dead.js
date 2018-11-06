@@ -1,27 +1,27 @@
 
 var game_id = parseInt(document.getElementById("game_id").value) ;
 var idnumber = parseInt(document.getElementById("idnumber").value) ;
-$.post("/projectx/dai/public/api/player",
-    {
-        "game_id": game_id
-    } )
-    .done(function (response) {
-        report = response;
-        console.log(report);
-        console.log(idnumber);
-        button = document.getElementById("coin")
-        is_your_turn = (idnumber == report);
-        button.disabled = !(is_your_turn);
-        if (is_your_turn){
-            button.innerText = "Guess";
-            button.style.backgroundColor = "red";
-        } else {
-            button.innerText = "Waiting";
-            button.style.backgroundColor = "gray";
-        }
-    }).fail(function (error){
-    console.log(error);
-});
+// $.post("/projectx/dai/public/api/player",
+//     {
+//         "game_id": game_id
+//     } )
+//     .done(function (response) {
+//         report = response;
+//         console.log(report);
+//         console.log(idnumber);
+//         button = document.getElementById("coin")
+//         is_your_turn = (idnumber == report);
+//         button.disabled = !(is_your_turn);
+//         if (is_your_turn){
+//             button.innerText = "Guess";
+//             button.style.backgroundColor = "red";
+//         } else {
+//             button.innerText = "Waiting";
+//             button.style.backgroundColor = "gray";
+//         }
+//     }).fail(function (error){
+//     console.log(error);
+// });
 
 
 function isNumberKey(evt) {
